@@ -30,7 +30,6 @@ export default function UserComponent() {
           color: "var(--secondaryColor)",
           height: "40px",
           width: "40px",
-          fontWeight: 300,
         }}
       />
     </Box>

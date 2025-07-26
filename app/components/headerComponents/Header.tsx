@@ -1,11 +1,13 @@
 "use client";
-import { AppBar, Box, Breadcrumbs } from "@mui/material";
+import { AppBar, Box } from "@mui/material";
 import UserComponent from "./userComponent";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import DrawerButton from "../buttons/DrawerButton";
 
 export default function Header() {
   const { isMobile } = useResponsive();
   const justifyContentValue = isMobile ? "space-between" : "center";
+  const headerContainerWidthValue = isMobile ? "95%" : "80%";
 
   return (
     <AppBar
@@ -21,14 +23,14 @@ export default function Header() {
     >
       <Box
         sx={{
-          width: "80%",
+          width: headerContainerWidthValue,
           display: "flex",
           alignItems: "center",
           justifyContent: justifyContentValue,
           mx: "auto",
         }}
       >
-        {isMobile && <Breadcrumbs />}
+        {isMobile && <DrawerButton />}
         <UserComponent />
       </Box>
     </AppBar>
