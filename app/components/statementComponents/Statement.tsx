@@ -18,6 +18,7 @@ export default function Statement() {
 		}}>
 			<Box sx={{
 				display: 'flex',
+				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'space-between',
 			}}>
