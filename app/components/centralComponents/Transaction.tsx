@@ -1,8 +1,11 @@
 "use client";
 import { Box, Typography } from "@mui/material";
 import TransactionForm from "./transactionForm";
+import { useResponsive } from "@/app/contexts/ResponsiveContext";
 
 export default function Transaction() {
+	const { isMobile } = useResponsive();
+	
   return (
 		<Box>
 			<Typography sx={{
@@ -10,7 +13,8 @@ export default function Transaction() {
 				fontSize: "25px",
 				color: "var(--thirdTextColor)",
 				mt: 3,
-				ml: 3
+				ml: isMobile ? 0 : 3,
+				textAlign: isMobile ? 'center' : 'left'
 			}}>
 				Nova transação
 			</Typography>

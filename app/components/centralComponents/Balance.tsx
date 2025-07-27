@@ -1,13 +1,16 @@
 "use client";
 import { Box, Divider, Typography } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useResponsive } from "@/app/contexts/ResponsiveContext";
 
 export default function Balance() {
+	const { isMobile, isDesktop } = useResponsive();
+
 	return (
 		<Box sx={{
 			position: 'relative',
-			top: '100px',
-			right: '100px',
+			top: isDesktop ? '100px' : isMobile ? '50px' : '100px',
+			right: isDesktop ? '100px' : isMobile ? '0px' : '50px',
 		}}>
 			<Box sx={{
 				display: "flex",
@@ -22,7 +25,7 @@ export default function Balance() {
 					Saldo
 				</Typography>
 				<VisibilityIcon sx={{
-					color: "var(--secondaryColor)",
+					color: isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)",
 					width: "20px",
 					height: "20px"
 				}} />
@@ -31,7 +34,7 @@ export default function Balance() {
 					width: "180px",
 					height: "16px",
 					borderBottomWidth: '2px',
-					borderColor: "var(--secondaryColor)", 
+					borderColor: isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)", 
 				}} />
 			<Box>
 				<Typography sx={{

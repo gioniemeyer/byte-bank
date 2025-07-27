@@ -1,8 +1,11 @@
 "use client";
+import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default function TransactionForm() {
+	const { isMobile } = useResponsive();
+	
 	const [type, setTransaction] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => setTransaction(event.target.value as string);
@@ -10,9 +13,11 @@ export default function TransactionForm() {
 	return (
 		<Box
 			sx={{
-				m: 3,
-				width: "355px",
+				mt: 3,
+				ml: isMobile ? 2 : 3,
+				width: isMobile ? "280px" : "355px",
 				display: "flex",
+				alignItems: isMobile ? 'center' : 'left',
 				flexDirection: "column",
 				gap: 2,
 			}}
@@ -65,7 +70,7 @@ export default function TransactionForm() {
 						height: "48px",
 					},
 					mb: 3,
-					width: '250px',
+					width: isMobile ? "144px" : "250px",
 				}}
 			/>
 
@@ -74,7 +79,7 @@ export default function TransactionForm() {
 				sx={{
 					color: "var(--primaryTextColor)",
 					backgroundColor: "var(--primaryColor)",
-					width: "250px",
+					width: isMobile ? "144px" : "250px",
 					height: "48px",
 					borderRadius: "8px",
 					fontWeight: 600,

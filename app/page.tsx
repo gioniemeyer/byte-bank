@@ -12,7 +12,11 @@ export default function Home() {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: {
+              xs: "column", // mobile
+              sm: "column", // tablet
+              md: "row",    // desktop
+            }
           }}
         >
           <Sidebar />
@@ -20,6 +24,7 @@ export default function Home() {
             sx={{
               display: "flex",
               flexDirection: "column",
+              alignItems: "center"
             }}
           >
             <CentralBox bgColor="var(--primaryColor)" height="402px" content="welcome" />
