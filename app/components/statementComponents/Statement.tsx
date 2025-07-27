@@ -1,6 +1,7 @@
 "use client";
 import { Box, Typography } from "@mui/material";
 import EditButton from "../buttons/EditButton";
+import StatementItem from "./statementItem";
 
 export default function Statement() {
   return (
@@ -33,6 +34,9 @@ export default function Statement() {
 					<EditButton type="delete"/>
 				</Box>
 			</Box>
+
+			<StatementItem type="deposit"></StatementItem>
+			<StatementItem type="transfer"></StatementItem>
 		</Box>
 		
   );

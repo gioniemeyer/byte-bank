@@ -39,6 +39,7 @@ export default function SidebarList() {
 											fontWeight={selectedItem === index ? 700 : 400}
 											color={selectedItem === index ? "var(--thirdColor)" : "inherit"}
 											textAlign="center"
+											noWrap
 										>
 											{text}
 										</Typography>
