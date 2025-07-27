@@ -3,6 +3,7 @@ import { Box, Container } from "@mui/material";
 import Header from "./components/headerComponents/Header";
 import Sidebar from "./components/sidebarComponents/Sidebar";
 import CentralBox from "./components/centralComponents/centralBox";
+import Statement from "./components/statementComponents/Statement";
 
 export default function Home() {
   return (
@@ -25,6 +26,8 @@ export default function Home() {
             <CentralBox bgColor="var(--primaryColor)" height="402px" />
             <CentralBox bgColor="var(--backgroundBox)" height="478px" />
           </Box>
+
+          <Statement></Statement>
         </Box>
       </Container>
     </ResponsiveProvider>
