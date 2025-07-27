@@ -3,7 +3,7 @@ import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography 
 import { useState } from "react";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 
-export default function Sidebar() {
+export default function SidebarList() {
 	const { isTablet, isDesktop } = useResponsive();
 	
 	const itens = ['Início', 'Transferências', 'Investimentos', 'Outros serviços'];
