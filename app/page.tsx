@@ -22,8 +22,8 @@ export default function Home() {
               flexDirection: "column",
             }}
           >
-            <CentralBox bgColor="var(--primaryColor)" height="402px" />
-            <CentralBox bgColor="var(--backgroundBox)" height="478px" />
+            <CentralBox bgColor="var(--primaryColor)" height="402px" content="welcome" />
+            <CentralBox bgColor="var(--backgroundBox)" height="478px" content="transaction" />
           </Box>
         </Box>
       </Container>

@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
+import Welcome from "./Welcome";
 
 interface CentralBoxProps {
   bgColor: string;
 	height: string;
+	content: string;
 }
 
-export default function CentralBox({ bgColor, height }: CentralBoxProps) {
+export default function CentralBox({ bgColor, height, content }: CentralBoxProps) {
     return (
 			<Box sx={{
 				width: "690px",
@@ -17,6 +19,8 @@ export default function CentralBox({ bgColor, height }: CentralBoxProps) {
 				borderRadius: '8px',
 				backgroundColor: bgColor,
 			}}>
+
+				{content === "welcome" && <Welcome/>}
 
 			</Box>
 		
