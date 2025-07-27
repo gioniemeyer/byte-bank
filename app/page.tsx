@@ -32,7 +32,7 @@ export default function Home() {
             <CentralBox bgColor="var(--backgroundBox)" height="478px" content="transaction" />
           </Box>
 
-          <Statement></Statement>
+          <Statement />
         </Box>
       </Container>
     </ResponsiveProvider>

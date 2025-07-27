@@ -12,7 +12,7 @@ export default function StatementItem({ type }: Statement) {
 			height: "78px",
 			display: 'flex',
 			flexDirection: 'column',
-			m: 3,
+			m: 2,
 		}}>
 
 			<Typography sx={{
