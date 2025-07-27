@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import Welcome from "./Welcome";
+import Transaction from "./Transaction";
 
 interface CentralBoxProps {
   bgColor: string;
@@ -20,9 +21,8 @@ export default function CentralBox({ bgColor, height, content }: CentralBoxProps
 				backgroundColor: bgColor,
 			}}>
 
-				{content === "welcome" && <Welcome/>}
-
+				{content === "welcome" && <Welcome />}
+				{content === "transaction" && <Transaction />}
 			</Box>
-		
     );
 }
