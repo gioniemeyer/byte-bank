@@ -1,10 +1,17 @@
 "use client";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
+import { useState } from "react";
+import SidebarList from "../sidebarComponents/sidebarList";
 
 export default function DrawerButton() {
+  const [open, setOpen] = useState(false);
+
+  const toggleSidebar = () => setOpen(prev => !prev);
+  
   return (
-    <Button>
+    <>
+    <Button onClick={toggleSidebar}>
       <MenuIcon
         sx={{
           color: "var(--secondaryColor)",
@@ -12,7 +19,10 @@ export default function DrawerButton() {
           width: "40px",
           fontWeight: 300,
         }}
-      />
+        />
     </Button>
+
+    {open && <SidebarList onClose={() => setOpen(false)} />}
+    </>
   );
 }

@@ -1,10 +1,15 @@
 "use client";
-import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
+import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useState } from "react";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function SidebarList() {
-	const { isTablet, isDesktop } = useResponsive();
+type SidebarListProps = {
+  onClose?: () => void;
+};
+
+export default function SidebarList({ onClose }: SidebarListProps) {
+	const { isMobile, isTablet, isDesktop } = useResponsive();
 	
 	const itens = ['Início', 'Transferências', 'Investimentos', 'Outros serviços'];
 
@@ -101,6 +106,76 @@ export default function SidebarList() {
 					</Box>
 				))}
 			</Box>
+		);
+	}
+
+	if (isMobile) {
+		return (
+			<Box sx ={{
+				width: "172px",
+				height: "240px",
+				top: 0,
+				left: 0,
+				pt: 2,
+				position: "absolute",
+				zIndex: 3,
+				backgroundColor: "var(--background)",
+			}}>
+
+				<IconButton
+					onClick={onClose}
+					sx={{
+						position: "absolute",
+						top: 0,
+						right: 0,
+						color: "var(--thirdColor)",
+						zIndex: 2,
+					}}
+				>
+					<CloseIcon />
+				</IconButton>
+
+				<List>
+					{itens.map((text, index) => (
+						<Box key={index} sx={{ textAlign: "center" }}>
+							<ListItem disablePadding>
+								<ListItemButton
+									selected={selectedItem === index}
+									onClick={() => setListItemColor(index)}
+									sx={{					
+										"&.Mui-selected": {
+											backgroundColor: "transparent",
+										},
+										"&.Mui-selected:hover": {
+											backgroundColor: "transparent",
+										}
+									}}>
+									<ListItemText
+										primary={
+											<Typography
+												fontSize={16}
+												fontWeight={selectedItem === index ? 700 : 400}
+												color={selectedItem === index ? "var(--secondaryColor)" : "var(--secondaryTextColor)"}
+												textAlign="center"
+												noWrap
+											>
+												{text}
+											</Typography>
+										}
+									/>
+								</ListItemButton>
+							</ListItem>
+		
+							{index < itens.length - 1 && (
+								<Divider sx={{
+									width: '112px',
+									margin: '0 auto',
+								}}/>
+							)}
+						</Box>
+					))}
+				</List>
+ 			</Box>
 		);
 	}
 }
