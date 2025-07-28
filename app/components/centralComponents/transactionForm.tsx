@@ -69,7 +69,7 @@ export default function TransactionForm() {
 					'& .MuiOutlinedInput-root': {
 						height: "48px",
 					},
-					mb: 3,
+					mb: 2,
 					width: isMobile ? "144px" : "250px",
 				}}
 			/>

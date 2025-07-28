@@ -2,6 +2,7 @@
 import { Box, Typography } from "@mui/material";
 import Balance from "./Balance";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import WelcomeImages from "../decorativeImages/welcomeImages";
 
 export default function Welcome() {
 	const { isMobile } = useResponsive();
@@ -13,6 +14,7 @@ export default function Welcome() {
 			justifyContent: "space-between",
 			alignItems: isMobile ? "center" : "left"
 		}}>
+			<WelcomeImages />
 			<Box>
 				<Typography sx={{
 					fontWeight: 600,
