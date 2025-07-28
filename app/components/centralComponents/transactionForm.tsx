@@ -40,11 +40,12 @@ export default function TransactionForm() {
 						if (!selected) {
 							return <span style={{ color: '#999' }}>Selecione o tipo de transação</span>;
 						}
-						return selected === "d" ? "Depósito" : "Transferência";
+						return selected === "1" ? "Câmbio de Moeda" : selected === "2" ? "DOC/TED" : "Empréstimo e Financiamento";
 					}}
 				>
-					<MenuItem value="d">Depósito</MenuItem>
-					<MenuItem value="t">Transferência</MenuItem>
+					<MenuItem value="1" sx={{ '&:hover, &.Mui-selected, &.Mui-selected:hover': { backgroundColor: 'var(--background)' }}}>Câmbio de Moeda</MenuItem>
+					<MenuItem value="2" sx={{ '&:hover, &.Mui-selected, &.Mui-selected:hover': { backgroundColor: 'var(--background)' }}}>DOC/TED</MenuItem>
+					<MenuItem value="3" sx={{ '&:hover, &.Mui-selected, &.Mui-selected:hover': { backgroundColor: 'var(--background)' }}}>Empréstimo e Financiamento</MenuItem>
 				</Select>
 			</FormControl>
 
