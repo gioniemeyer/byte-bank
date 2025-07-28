@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import EditButton from "../buttons/EditButton";
 import StatementItem from "./statementItem";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { statementMock } from "@/app/mocks/statementMock";
 
 export default function Statement() {
 	const { isMobile, isDesktop } = useResponsive();
@@ -45,8 +46,14 @@ export default function Statement() {
 					</Box>
 				</Box>
 
-				<StatementItem type="deposit"></StatementItem>
-				<StatementItem type="transfer"></StatementItem>
+				{statementMock.map(item => (
+					<StatementItem 
+						key={item.id}
+						date={item.date}
+						type={item.type}
+						value={item.value}
+					/>
+				))}
 			</Box>
 		</Box>
 		

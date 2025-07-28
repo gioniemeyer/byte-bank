@@ -2,6 +2,7 @@
 import { Box, Divider, Typography } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { balanceMock } from "@/app/mocks/userMock";
 
 export default function Balance() {
 	const { isMobile, isDesktop } = useResponsive();
@@ -50,7 +51,10 @@ export default function Balance() {
 					fontSize: "32px",
 					color: "var(--primaryTextColor)",
 				}}>
-					R$ 2.500,00
+					{balanceMock[balanceMock.length - 1].balance.toLocaleString("pt-BR", {
+						style: "currency",
+						currency: "BRL",
+					})}
 				</Typography>
 			</Box>
 		</Box>

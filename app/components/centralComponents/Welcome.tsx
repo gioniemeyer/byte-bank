@@ -3,9 +3,21 @@ import { Box, Typography } from "@mui/material";
 import Balance from "./Balance";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import WelcomeImages from "../decorativeImages/welcomeImages";
+import { userMock } from "@/app/mocks/userMock";
 
 export default function Welcome() {
 	const { isMobile } = useResponsive();
+
+	const date = new Date();
+
+	const formatedDate = date.toLocaleDateString("pt-BR", {
+		weekday: "long",
+		day: "2-digit",
+		month: "2-digit",
+		year: "numeric",
+	});
+
+	const formatedLetterDate = formatedDate.charAt(0).toUpperCase() + formatedDate.slice(1);
 	
 	return (
 		<Box sx={{
@@ -25,7 +37,7 @@ export default function Welcome() {
 					textWrap: "nowrap",
 					textAlign: isMobile ? "center" : "left"
 				}}>
-					Olá, username! :)
+					Olá, {userMock[0].first_name}! :)
 				</Typography>
 
 				<Typography sx={{
@@ -36,7 +48,7 @@ export default function Welcome() {
 					ml: isMobile ? 0 : 3,
 					textAlign: isMobile ? "center" : "left"
 				}}>
-					Quinta-feira, 08/09/2024
+					{formatedLetterDate}
 				</Typography>
 			</Box>
 

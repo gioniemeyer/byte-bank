@@ -1,11 +1,8 @@
 "use client";
 import { Box, Divider, Typography } from "@mui/material";
+import { StatementItemInterface } from "@/app/mocks/statementMock";
 
-interface Statement {
-	type: string;
-}
-
-export default function StatementItem({ type }: Statement) {
+export default function StatementItem({ date, type, value }: StatementItemInterface) {
   return (
 		<Box sx={{
 			width: "240px",
@@ -20,7 +17,7 @@ export default function StatementItem({ type }: Statement) {
 				fontSize: "13px",
 				color: "var(--thirdColor)"
 			}}>
-				Novembro
+				{new Date(date).toLocaleDateString("pt-BR", { month: "long" }).replace(/^./, str => str.toUpperCase())}
 			</Typography>
 
 			<Box sx={{
@@ -34,8 +31,7 @@ export default function StatementItem({ type }: Statement) {
 					fontSize: "16px",
 					color: "var(--secondaryTextColor)",
 				}}>
-					{type === "deposit" && 'Depósito'}
-					{type === "transfer" && 'Transferência'}
+					{type}
 				</Typography>
 
 				<Typography sx={{
@@ -43,7 +39,11 @@ export default function StatementItem({ type }: Statement) {
 					fontSize: "13px",
 					color: "var(--thirdTextColor)"
 				}}>
-					18/11/2022
+					{new Date(date).toLocaleDateString("pt-BR", {
+						day: "2-digit",
+						month: "2-digit",
+						year: "numeric",
+					})}
 				</Typography>
 			</Box>
 
@@ -52,7 +52,10 @@ export default function StatementItem({ type }: Statement) {
 				fontSize: "16px",
 				color: "var(--secondaryTextColor)",
 			}}>
-				RS 150,00
+				{(type === "Transferência" ? -value : value).toLocaleString("pt-BR", {
+					style: "currency",
+					currency: "BRL",
+				})}
 			</Typography>
 
 			<Divider sx={{
