@@ -9,7 +9,7 @@ export default function StatementItem({ date, type, value }: StatementItemInterf
 			height: "78px",
 			display: 'flex',
 			flexDirection: 'column',
-			m: 2,
+			m: 1,
 		}}>
 
 			<Typography sx={{
@@ -60,7 +60,7 @@ export default function StatementItem({ date, type, value }: StatementItemInterf
 
 			<Divider sx={{
 				width: '180px',
-				color: "var(--thirdTextColor)",
+				borderColor: "rgba(71, 161, 56, 0.5)",
 				mt: 1
 			}}/>
 		</Box>

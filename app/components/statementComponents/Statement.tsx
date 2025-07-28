@@ -11,7 +11,8 @@ export default function Statement() {
   return (
 		<Box sx={{
 			width: isDesktop ? "282px" : isMobile ? "312px" : "600px",
-			height: isDesktop ? "512px" : "480px",
+			minHeight: isDesktop ? "512px" : "480px",
+			height: "100%",			
 			mt: isDesktop ? 3 : 6,
 			ml: isDesktop ? 3 : isMobile ? 1 : -3,
 			borderRadius: '8px',
