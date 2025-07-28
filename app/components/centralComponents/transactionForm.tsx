@@ -42,9 +42,21 @@ export default function TransactionForm() {
 						}
 						return selected === "d" ? "Depósito" : "Transferência";
 					}}
+					sx={{
+						'& .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+						},
+						'&:hover .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+						},
+						'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+							borderWidth: '1px',
+						},
+					}}
 				>
-					<MenuItem value="d">Depósito</MenuItem>
-					<MenuItem value="t">Transferência</MenuItem>
+					<MenuItem value="d" sx={{ '&:hover, &.Mui-selected, &.Mui-selected:hover': { backgroundColor: 'var(--background)' }}}>Depósito</MenuItem>
+					<MenuItem value="t" sx={{ '&:hover, &.Mui-selected, &.Mui-selected:hover': { backgroundColor: 'var(--background)' }}}>Transferência</MenuItem>
 				</Select>
 			</FormControl>
 
@@ -68,6 +80,16 @@ export default function TransactionForm() {
 					borderRadius: "8px",
 					'& .MuiOutlinedInput-root': {
 						height: "48px",
+						'& .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+						},
+						'&:hover .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+						},
+						'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+							borderColor: 'var(--primaryColor)',
+							borderWidth: '1px',
+						},
 					},
 					mb: 2,
 					width: isMobile ? "144px" : "250px",
