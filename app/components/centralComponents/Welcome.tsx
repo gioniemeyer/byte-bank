@@ -32,7 +32,7 @@ export default function Welcome() {
 					fontWeight: 600,
 					fontSize: "24px",
 					color: "var(--primaryTextColor)",
-					mt: 3,
+					mt: isMobile ? 4 : 3,
 					ml: isMobile ? 0 : 3,
 					textWrap: "nowrap",
 					textAlign: isMobile ? "center" : "left"
@@ -44,7 +44,7 @@ export default function Welcome() {
 					fontWeight: 400,
 					fontSize: "14px",
 					color: "var(--primaryTextColor)",
-					mt: 3,
+					mt: isMobile ? 4 : 2,
 					ml: isMobile ? 0 : 3,
 					textAlign: isMobile ? "center" : "left"
 				}}>

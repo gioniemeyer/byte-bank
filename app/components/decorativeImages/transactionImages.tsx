@@ -34,8 +34,8 @@ export default function TransactionImages() {
             position: "absolute",
             top: 0,
             left: 0,
-            width: 180,
-            height: 177,
+            width: 146,
+            height: 144,
           }}
         >
           <Image
@@ -54,8 +54,8 @@ export default function TransactionImages() {
             position: "absolute",
             bottom: 0,
             right: 0,
-            width: 180,
-            height: 177,
+            width: 146,
+            height: 144,
           }}
         >
           <Image
@@ -91,8 +91,8 @@ export default function TransactionImages() {
         <Box
           sx={{
             position: "absolute",
-            bottom: 24,
-            right: 24,
+            bottom: 28,
+            right: 16,
             width: isTablet ? 327 : 280,
             height: 231,
           }}

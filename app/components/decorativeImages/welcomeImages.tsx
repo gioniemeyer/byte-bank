@@ -34,8 +34,8 @@ export default function WelcomeImages() {
             position: "absolute",
             top: 0,
             left: 0,
-            width: 180,
-            height: 177,
+            width: 144,
+            height: 142,
           }}
         >
           <Image
@@ -73,8 +73,8 @@ export default function WelcomeImages() {
             position: "absolute",
             bottom: 0,
             right: 0,
-            width: 180,
-            height: 177,
+            width: 144,
+            height: 142,
           }}
         >
           <Image
@@ -91,7 +91,7 @@ export default function WelcomeImages() {
         <Box
           sx={{
             position: "absolute",
-            bottom: 24,
+            bottom: 34,
             left: isTablet ? 32 : 14,
             width: 283,
             height: 228,

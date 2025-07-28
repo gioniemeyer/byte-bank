@@ -15,9 +15,10 @@ export default function Transaction() {
 				fontWeight: 700,
 				fontSize: "25px",
 				color: "var(--thirdTextColor)",
-				mt: 3,
+				mt: isMobile ? 4 : 3,
 				ml: isMobile ? 0 : 3,
-				textAlign: isMobile ? 'center' : 'left'
+				textAlign: isMobile ? 'center' : 'left',
+				position: 'relative',
 			}}>
 				Nova transação
 			</Typography>

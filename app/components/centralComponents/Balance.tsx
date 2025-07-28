@@ -10,8 +10,8 @@ export default function Balance() {
 	return (
 		<Box sx={{
 			position: 'relative',
-			top: isDesktop ? '100px' : isMobile ? '50px' : '100px',
-			right: isDesktop ? '100px' : isMobile ? '0px' : '50px',
+			top: isDesktop ? '94px' : isMobile ? '48px' : '86px',
+			right: isDesktop ? '100px' : isMobile ? '0px' : '110px',
 		}}>
 			<Box sx={{
 				display: "flex",
