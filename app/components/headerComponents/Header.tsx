@@ -5,7 +5,8 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import DrawerButton from "../buttons/DrawerButton";
 
 export default function Header() {
-  const { isMobile } = useResponsive();
+  const { isMobile, isTablet, isDesktop } = useResponsive();
+  const containerWidth = isDesktop ? "1200px" : isTablet ? "600px" : "312px";
   const justifyContentValue = isMobile ? "space-between" : "right";
 
   return (
@@ -20,7 +21,16 @@ export default function Header() {
         alignItems: "center",
       }}
     >
-      <Container fixed>
+      <Container
+        fixed
+        sx={{
+          width: containerWidth,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Box
           sx={{
             width: "100%",
