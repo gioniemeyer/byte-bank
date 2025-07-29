@@ -1,7 +1,15 @@
 import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
+
+export const metadata: Metadata = {
+  title: "Bytebank",
+  icons: {
+    icon: "/favicon.png",
+  }
+};
 
 export default function RootLayout({
   children,
@@ -9,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="pt-br" className={inter.className}>
       <body>{children}</body>
     </html>
   );
