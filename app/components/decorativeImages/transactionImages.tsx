@@ -15,14 +15,13 @@ export default function TransactionImages() {
             position: "absolute",
             top: 0,
             right: 0,
-            width: 180,
-            height: 177,
           }}
         >
           <Image
             src="/Pixels3.png"
             alt="pixels"
-            fill
+            width={180}
+            height={177}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -34,14 +33,13 @@ export default function TransactionImages() {
             position: "absolute",
             top: 0,
             left: 0,
-            width: 146,
-            height: 144,
           }}
         >
           <Image
             src="/Pixels3.png"
             alt="pixels"
-            fill
+            width={146}
+            height={144}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -54,14 +52,13 @@ export default function TransactionImages() {
             position: "absolute",
             bottom: 0,
             right: 0,
-            width: 146,
-            height: 144,
           }}
         >
           <Image
             src="/Pixels2.png"
             alt="pixels"
-            fill
+            width={146}
+            height={144}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -73,14 +70,13 @@ export default function TransactionImages() {
             position: "absolute",
             bottom: 0,
             left: 0,
-            width: 180,
-            height: 177,
           }}
         >
           <Image
             src="/Pixels2.png"
             alt="pixels"
-            fill
+            width={180}
+            height={177}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -93,14 +89,13 @@ export default function TransactionImages() {
             position: "absolute",
             bottom: 28,
             right: 16,
-            width: isTablet ? 327 : 280,
-            height: 231,
           }}
         >
           <Image
             src="/Ilustração2.png"
             alt="ilustração"
-            fill
+            width={isTablet ? 327 : 280}
+            height={231}
             style={{ objectFit: "contain" }}
           />
         </Box>
