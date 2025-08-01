@@ -1,14 +1,30 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { useTransactions } from "@/app/contexts/TransactionContext";
 import { Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 export default function TransactionForm() {
 	const { isMobile } = useResponsive();
+	const { addTransaction } = useTransactions();
 	
 	const [type, setTransaction] = React.useState('');
+	const [value, setValue] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => setTransaction(event.target.value as string);
+
+	const submitForm = () => {
+		if (!type || !value) return;
+
+		addTransaction({
+			date: new Date().toISOString(),
+			type: type === "d" ? "Depósito" : "Transferência",
+			value: parseFloat(value),
+		});
+
+		setTransaction("");
+		setValue("");
+	};
 
 	return (
 		<Box
@@ -72,6 +88,15 @@ export default function TransactionForm() {
 			</Typography>
 
 			<TextField
+				value={value}
+			  onChange={e => {
+					const input = e.target.value;
+					const regex = /^\d*(,?\d{0,2})?$/;
+
+					if (regex.test(input)) {
+						setValue(input);
+					}
+				}}
 				id="outlined-basic"
 				placeholder="00,00"
 				variant="outlined"
@@ -97,6 +122,7 @@ export default function TransactionForm() {
 			/>
 
 			<Button
+				onClick={submitForm}
 				variant="contained"
 				sx={{
 					color: "var(--primaryTextColor)",
