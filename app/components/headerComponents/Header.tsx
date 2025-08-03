@@ -13,6 +13,7 @@ export default function Header() {
     <AppBar
       position="static"
       sx={{
+        width: "100%",
         background: "var(--primaryColor)",
         color: "var(--primaryTextColor)",
         height: "96px",

@@ -15,7 +15,6 @@ export default function Statement() {
         minHeight: isDesktop ? "512px" : "480px",
         height: "100%",
         mt: isDesktop ? 3 : 6,
-        //ml: isDesktop ? 3 : isMobile ? 1 : -3,
         borderRadius: "8px",
         backgroundColor: "var(--primaryTextColor)",
       }}
