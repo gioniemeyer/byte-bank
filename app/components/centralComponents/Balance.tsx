@@ -33,26 +33,26 @@ export default function Balance() {
 				</Typography>
 				<IconButton  onClick={() => setShowBalance((prev) => !prev)}>
 					{showBalance ? (
-            <VisibilityIcon
-              sx={{
-                color: isDesktop
-                  ? "var(--secondaryColor)"
-                  : "var(--primaryTextColor)",
-                width: "20px",
-                height: "20px",
-              }}
-            />
-          ) : (
-            <VisibilityOffIcon
-              sx={{
-                color: isDesktop
-                  ? "var(--secondaryColor)"
-                  : "var(--primaryTextColor)",
-                width: "20px",
-                height: "20px",
-              }}
-            />
-          )}
+						<VisibilityIcon
+							sx={{
+							color: isDesktop
+								? "var(--secondaryColor)"
+								: "var(--primaryTextColor)",
+							width: "20px",
+							height: "20px",
+							}}
+						/>
+					) : (
+						<VisibilityOffIcon
+							sx={{
+							color: isDesktop
+								? "var(--secondaryColor)"
+								: "var(--primaryTextColor)",
+							width: "20px",
+							height: "20px",
+							}}
+						/>
+					)}
 				</IconButton>
 			</Box>
 				<Divider sx={{
