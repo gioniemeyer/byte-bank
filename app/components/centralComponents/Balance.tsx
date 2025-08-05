@@ -1,11 +1,17 @@
 "use client";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { balanceMock } from "@/app/mocks/userMock";
+import { useState } from "react";
 
 export default function Balance() {
 	const { isMobile, isDesktop } = useResponsive();
+
+	const [showBalance, setShowBalance] = useState(true);
+
+	const latestBalance = balanceMock[balanceMock.length - 1]?.balance ?? 0;
 
 	return (
 		<Box sx={{
@@ -25,11 +31,29 @@ export default function Balance() {
 				}}>
 					Saldo
 				</Typography>
-				<VisibilityIcon sx={{
-					color: isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)",
-					width: "20px",
-					height: "20px"
-				}} />
+				<IconButton  onClick={() => setShowBalance((prev) => !prev)}>
+					{showBalance ? (
+						<VisibilityIcon
+							sx={{
+							color: isDesktop
+								? "var(--secondaryColor)"
+								: "var(--primaryTextColor)",
+							width: "20px",
+							height: "20px",
+							}}
+						/>
+					) : (
+						<VisibilityOffIcon
+							sx={{
+							color: isDesktop
+								? "var(--secondaryColor)"
+								: "var(--primaryTextColor)",
+							width: "20px",
+							height: "20px",
+							}}
+						/>
+					)}
+				</IconButton>
 			</Box>
 				<Divider sx={{
 					width: "180px",
@@ -51,10 +75,7 @@ export default function Balance() {
 					fontSize: "32px",
 					color: "var(--primaryTextColor)",
 				}}>
-					{balanceMock[balanceMock.length - 1].balance.toLocaleString("pt-BR", {
-						style: "currency",
-						currency: "BRL",
-					})}
+					{showBalance ? latestBalance.toLocaleString("pt-BR", {style: "currency",	currency: "BRL"}) : "••••••"}
 				</Typography>
 			</Box>
 		</Box>

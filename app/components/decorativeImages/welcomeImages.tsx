@@ -15,14 +15,13 @@ export default function WelcomeImages() {
             position: "absolute",
             top: 0,
             right: 0,
-            width: 180,
-            height: 177,
           }}
         >
           <Image
             src="/Pixels1.png"
             alt="pixels"
-            fill
+            width={180}
+            height={177}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -34,14 +33,13 @@ export default function WelcomeImages() {
             position: "absolute",
             top: 0,
             left: 0,
-            width: 144,
-            height: 142,
           }}
         >
           <Image
             src="/Pixels1.png"
             alt="pixels"
-            fill
+            width={144}
+            height={142}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -54,14 +52,13 @@ export default function WelcomeImages() {
             position: "absolute",
             bottom: 0,
             left: 0,
-            width: 180,
-            height: 177,
           }}
         >
           <Image
             src="/Pixels.png"
             alt="pixels"
-            fill
+            width={180}
+            height={177}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -73,14 +70,13 @@ export default function WelcomeImages() {
             position: "absolute",
             bottom: 0,
             right: 0,
-            width: 144,
-            height: 142,
           }}
         >
           <Image
             src="/Pixels.png"
             alt="pixels"
-            fill
+            width={144}
+            height={142}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -93,14 +89,13 @@ export default function WelcomeImages() {
             position: "absolute",
             bottom: 34,
             left: isTablet ? 32 : 14,
-            width: 283,
-            height: 228,
           }}
         >
           <Image
             src="/Ilustração1.png"
             alt="ilustração"
-            fill
+            width={283}
+            height={228}
             style={{ objectFit: "contain" }}
           />
         </Box>
