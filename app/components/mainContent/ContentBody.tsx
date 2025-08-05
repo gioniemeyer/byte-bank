@@ -6,6 +6,7 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 
 export default function ContentBody() {
   const { isMobile } = useResponsive();
+
   return (
     <Box
       sx={{
@@ -15,16 +16,8 @@ export default function ContentBody() {
         mx: isMobile ? "0px" : "10px",
       }}
     >
-      <CentralBox
-        bgColor="var(--primaryColor)"
-        height="402px"
-        content="welcome"
-      />
-      <CentralBox
-        bgColor="var(--backgroundBox)"
-        height="478px"
-        content="transaction"
-      />
+      <CentralBox content="welcome" />
+      <CentralBox content="transaction" />
       {isMobile && <Statement />}
     </Box>
   );
