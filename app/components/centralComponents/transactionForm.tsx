@@ -1,14 +1,38 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { useTransactions } from "@/app/contexts/TransactionContext";
 import { Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 export default function TransactionForm() {
 	const { isMobile } = useResponsive();
+	const { addTransaction } = useTransactions();
 	
 	const [type, setTransaction] = React.useState('');
+	const [value, setValue] = useState('');
+	const [error, setError] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => setTransaction(event.target.value as string);
+
+	const submitForm = () => {
+		const valueRegex = /^\d+,\d{2}$/;
+
+		if (!valueRegex.test(value)) {
+      setError("Informe o valor no formato 00,00");
+      return;
+    }
+
+    setError("");
+
+		addTransaction({
+			date: new Date().toISOString(),
+			type: type === "d" ? "Depósito" : "Transferência",
+			value: parseFloat(value.replace(",", ".")),
+		});
+
+		setTransaction("");
+		setValue("");
+	};
 
 	return (
 		<Box
@@ -72,13 +96,24 @@ export default function TransactionForm() {
 			</Typography>
 
 			<TextField
+				value={value}
+			  onChange={e => {
+					const input = e.target.value;
+					const regex = /^\d*(,?\d{0,2})?$/;
+
+					if (regex.test(input)) {
+						setValue(input);
+						setError("");
+					}
+				}}
+				helperText={error}
 				id="outlined-basic"
 				placeholder="00,00"
 				variant="outlined"
 				sx={{
-					backgroundColor: "var(--primaryTextColor)",
 					borderRadius: "8px",
 					'& .MuiOutlinedInput-root': {
+						backgroundColor: "var(--primaryTextColor)",
 						height: "48px",
 						'& .MuiOutlinedInput-notchedOutline': {
 							borderColor: 'var(--primaryColor)',
@@ -91,12 +126,22 @@ export default function TransactionForm() {
 							borderWidth: '1px',
 						},
 					},
+					"& .MuiFormHelperText-root": {
+						color: "red",
+						fontSize: "12px",
+						height: "10px",
+						mt: 1,
+						ml: 1,
+						backgroundColor: "transparent"
+					},
 					mb: 2,
 					width: isMobile ? "144px" : "250px",
 				}}
 			/>
 
 			<Button
+				onClick={submitForm}
+				disabled={!type || !value}
 				variant="contained"
 				sx={{
 					color: "var(--primaryTextColor)",
@@ -107,6 +152,11 @@ export default function TransactionForm() {
 					fontWeight: 600,
 					fontSize: "16px",
 					textTransform: "none",
+					'&.Mui-disabled': {
+						backgroundColor: 'var(--thirdTextColor)',
+						color: 'var(--primaryTextColor)',
+						opacity: 0.9
+					},
 				}}
 			>
 				Concluir transação
