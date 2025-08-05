@@ -18,6 +18,7 @@ export default function BodyContainer() {
         flexDirection: flexDirectionValue,
         width: "100%",
         mx: "auto",
+        mb: "30px",
         alignItems: alignItemsValue,
       }}
     >

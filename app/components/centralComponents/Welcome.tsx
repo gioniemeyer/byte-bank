@@ -1,5 +1,6 @@
 "use client";
 import { Box, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
 import Balance from "./Balance";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import WelcomeImages from "../decorativeImages/welcomeImages";
@@ -7,18 +8,20 @@ import { userMock } from "@/app/mocks/userMock";
 
 export default function Welcome() {
   const { isMobile, isDesktop } = useResponsive();
+  const [formatedLetterDate, setFormatedLetterDate] = useState("");
 
-  const date = new Date();
-
-  const formatedDate = date.toLocaleDateString("pt-BR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-
-  const formatedLetterDate =
-    formatedDate.charAt(0).toUpperCase() + formatedDate.slice(1);
+  useEffect(() => {
+    const date = new Date();
+    const formatedDate = date.toLocaleDateString("pt-BR", {
+      weekday: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    setFormatedLetterDate(
+      formatedDate.charAt(0).toUpperCase() + formatedDate.slice(1)
+    );
+  }, []);
 
   return (
     <Box
