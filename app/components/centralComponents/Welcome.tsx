@@ -27,7 +27,7 @@ export default function Welcome() {
     <Box
       sx={{
         display: "flex",
-        height: isMobile ? "655px" : "478px",
+        height: isMobile ? "655px" : "402px",
         flexDirection: isMobile ? "column" : "row",
         justifyContent: "space-between",
         alignItems: isMobile ? "center" : "left",
