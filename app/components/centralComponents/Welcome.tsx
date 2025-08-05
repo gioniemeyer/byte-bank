@@ -31,8 +31,9 @@ export default function Welcome() {
       }}
     >
       {/* Imagens decorativas, flutuando*/}
-
       {!isDesktop && <WelcomeImages />}
+
+      {/* Agrupe textos e Balance juntos no mobile */}
       <Box>
         <Typography
           sx={{
@@ -60,8 +61,12 @@ export default function Welcome() {
         >
           {formatedLetterDate}
         </Typography>
+
+        {/* Balance logo abaixo dos textos no mobile */}
+        {isMobile && <Balance />}
       </Box>
 
+      {/* No desktop/tablet, Balance fica fora do Box dos textos */}
       {!isMobile && <Balance />}
     </Box>
   );

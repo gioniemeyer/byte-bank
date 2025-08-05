@@ -5,11 +5,21 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import TransactionImages from "../decorativeImages/transactionImages";
 
 export default function Transaction() {
-  const { isMobile } = useResponsive();
+  const { isMobile, isDesktop } = useResponsive();
 
   return (
-    <Box>
-      <TransactionImages />
+    <Box
+      sx={{
+        position: "relative",
+        height: isMobile ? "655px" : "478px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: isMobile ? "center" : "flex-start",
+        justifyContent: "flex-start",
+      }}
+    >
+      {/* Imagens decorativas */}
+      {!isDesktop && <TransactionImages />}
 
       <Typography
         sx={{

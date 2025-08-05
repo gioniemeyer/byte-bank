@@ -3,16 +3,20 @@ import { Box, Divider, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { balanceMock } from "@/app/mocks/userMock";
+import type { SxProps, Theme } from "@mui/material";
 
 export default function Balance() {
   const { isMobile, isDesktop } = useResponsive();
 
-  // Defina as posições de acordo com o dispositivo
-  const positionStyles = isDesktop
-    ? { top: "94px", right: "100px" }
-    : isMobile
-    ? { top: "48px", right: "0px" }
-    : { top: "86px", right: "110px" };
+  let sx: SxProps<Theme>;
+
+  if (isDesktop) {
+    sx = { position: "relative", top: "94px", right: "100px" };
+  } else if (isMobile) {
+    sx = { position: "static", mt: 4 };
+  } else {
+    sx = { position: "relative", top: "86px", right: "110px" };
+  }
 
   // Pegue o saldo mais recente
   const latestBalance = balanceMock[balanceMock.length - 1].balance;
@@ -21,7 +25,7 @@ export default function Balance() {
   const color = isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)";
 
   return (
-    <Box sx={{ position: "relative", ...positionStyles }}>
+    <Box sx={sx}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ fontWeight: 600, fontSize: "20px", color, mr: 4 }}>
           Saldo
