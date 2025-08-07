@@ -3,10 +3,11 @@ import { Box, Typography } from "@mui/material";
 import EditButton from "../buttons/EditButton";
 import StatementItem from "./statementItem";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { statementMock } from "@/app/mocks/statementMock";
+import { useTransactions } from "@/app/contexts/TransactionContext";
 
 export default function Statement() {
   const { isMobile, isDesktop } = useResponsive();
+  const { transactions } = useTransactions();
 
   return (
     <Box
@@ -51,7 +52,7 @@ export default function Statement() {
           </Box>
         </Box>
 
-        {statementMock.map((item) => (
+        {transactions.map((item) => (
           <StatementItem
             key={item.id}
             date={item.date}

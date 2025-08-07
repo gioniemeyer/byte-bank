@@ -1,12 +1,5 @@
-import { ResponsiveProvider } from "./contexts/ResponsiveContext";
-import Header from "./components/headerComponents/Header";
-import BodyContainer from "./components/BodyContainer";
+import MainContent from "./components/mainContent/mainContent";
 
 export default function Home() {
-  return (
-    <ResponsiveProvider>
-      <Header />
-      <BodyContainer />
-    </ResponsiveProvider>
-  );
+  return <MainContent />;
 }

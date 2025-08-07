@@ -13,6 +13,8 @@ export default function TransactionImages() {
       key: "pixel-top-tablet-desktop",
       src: "/Pixels3.png",
       alt: "pixels",
+      width: isTablet || isDesktop ? 180 : 146,
+      height: isTablet || isDesktop ? 177 : 144,
       sx: {
         position: "absolute",
         top: 0,
@@ -26,6 +28,8 @@ export default function TransactionImages() {
       key: "pixel-top-mobile",
       src: "/Pixels3.png",
       alt: "pixels",
+      width: 146,
+      height: 144,
       sx: {
         position: "absolute",
         top: 0,
@@ -39,6 +43,8 @@ export default function TransactionImages() {
       key: "pixel-bottom-mobile",
       src: "/Pixels2.png",
       alt: "pixels",
+      width: 146,
+      height: 144,
       sx: {
         position: "absolute",
         bottom: 0,
@@ -52,6 +58,8 @@ export default function TransactionImages() {
       key: "pixel-bottom-tablet-desktop",
       src: "/Pixels2.png",
       alt: "pixels",
+      width: 180,
+      height: 177,
       sx: {
         position: "absolute",
         bottom: 0,
@@ -65,6 +73,8 @@ export default function TransactionImages() {
       key: "illustration",
       src: "/Ilustração2.png",
       alt: "ilustração",
+      width: isTablet ? 327 : 280,
+      height: 231,
       sx: {
         position: "absolute",
         bottom: "28px",
@@ -73,23 +83,24 @@ export default function TransactionImages() {
         height: "231px",
       },
     },
-  ].filter(Boolean);
-
-  const filteredImages = images.filter(Boolean) as {
+  ].filter(Boolean) as {
     key: string;
     src: string;
     alt: string;
+    width: number;
+    height: number;
     sx: object;
   }[];
 
   return (
     <>
-      {filteredImages.map((img) => (
+      {images.map((img) => (
         <Box key={img.key} sx={img.sx}>
           <Image
             src={img.src}
             alt={img.alt}
-            fill
+            width={img.width}
+            height={img.height}
             style={{ objectFit: "contain" }}
           />
         </Box>

@@ -1,12 +1,15 @@
 "use client";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { balanceMock } from "@/app/mocks/userMock";
 import type { SxProps, Theme } from "@mui/material";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
 
 export default function Balance() {
   const { isMobile, isDesktop } = useResponsive();
+  const [showBalance, setShowBalance] = useState(true);
 
   let sx: SxProps<Theme>;
 
@@ -19,7 +22,7 @@ export default function Balance() {
   }
 
   // Pegue o saldo mais recente
-  const latestBalance = balanceMock[balanceMock.length - 1].balance;
+  const latestBalance = balanceMock[balanceMock.length - 1]?.balance ?? 0;
 
   // Cor do texto/ícone/divisor
   const color = isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)";
@@ -30,7 +33,29 @@ export default function Balance() {
         <Typography sx={{ fontWeight: 600, fontSize: "20px", color, mr: 4 }}>
           Saldo
         </Typography>
-        <VisibilityIcon sx={{ color, width: "20px", height: "20px" }} />
+        <IconButton onClick={() => setShowBalance((prev) => !prev)}>
+          {showBalance ? (
+            <VisibilityIcon
+              sx={{
+                color: isDesktop
+                  ? "var(--secondaryColor)"
+                  : "var(--primaryTextColor)",
+                width: "20px",
+                height: "20px",
+              }}
+            />
+          ) : (
+            <VisibilityOffIcon
+              sx={{
+                color: isDesktop
+                  ? "var(--secondaryColor)"
+                  : "var(--primaryTextColor)",
+                width: "20px",
+                height: "20px",
+              }}
+            />
+          )}
+        </IconButton>
       </Box>
       <Divider
         sx={{
@@ -58,10 +83,12 @@ export default function Balance() {
             color: "var(--primaryTextColor)",
           }}
         >
-          {latestBalance.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {showBalance
+            ? latestBalance.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })
+            : "••••••"}
         </Typography>
       </Box>
     </Box>

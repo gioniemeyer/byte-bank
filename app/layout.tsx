@@ -5,10 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Bytebank",
-  icons: {
-    icon: "/favicon.png",
-  }
+  title: "Bytebank"
 };
 
 export default function RootLayout({
