@@ -4,102 +4,107 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 
 export default function TransactionImages() {
-	const { isMobile, isDesktop, isTablet } = useResponsive();
-	
+  const { isMobile, isTablet, isDesktop } = useResponsive();
+
+  // Configurações das imagens
+  const images = [
+    // Pixel superior (tablet e desktop)
+    (isTablet || isDesktop) && {
+      key: "pixel-top-tablet-desktop",
+      src: "/Pixels3.png",
+      alt: "pixels",
+      width: isTablet || isDesktop ? 180 : 146,
+      height: isTablet || isDesktop ? 177 : 144,
+      sx: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        width: "180px",
+        height: "177px",
+      },
+    },
+    // Pixel superior (mobile)
+    isMobile && {
+      key: "pixel-top-mobile",
+      src: "/Pixels3.png",
+      alt: "pixels",
+      width: 146,
+      height: 144,
+      sx: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "146px",
+        height: "144px",
+      },
+    },
+    // Pixel inferior (mobile)
+    isMobile && {
+      key: "pixel-bottom-mobile",
+      src: "/Pixels2.png",
+      alt: "pixels",
+      width: 146,
+      height: 144,
+      sx: {
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        width: "146px",
+        height: "144px",
+      },
+    },
+    // Pixel inferior (tablet e desktop)
+    (isTablet || isDesktop) && {
+      key: "pixel-bottom-tablet-desktop",
+      src: "/Pixels2.png",
+      alt: "pixels",
+      width: 180,
+      height: 177,
+      sx: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: "180px",
+        height: "177px",
+      },
+    },
+    // Ilustração (mobile e tablet)
+    !isDesktop && {
+      key: "illustration",
+      src: "/Ilustração2.png",
+      alt: "ilustração",
+      width: isTablet ? 327 : 280,
+      height: 231,
+      sx: {
+        position: "absolute",
+        bottom: "28px",
+        right: "16px",
+        width: isTablet ? "327px" : "280px",
+        height: "231px",
+      },
+    },
+  ].filter(Boolean) as {
+    key: string;
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    sx: object;
+  }[];
+
   return (
-		<>
-      {/* Pixel superior */}
-      {(isTablet || isDesktop) && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-          }}
-        >
+    <>
+      {images.map((img) => (
+        <Box key={img.key} sx={img.sx}>
           <Image
-            src="/Pixels3.png"
-            alt="pixels"
-            width={180}
-            height={177}
+            src={img.src}
+            alt={img.alt}
+            width={img.width}
+            height={img.height}
             style={{ objectFit: "contain" }}
           />
         </Box>
-      )}
-
-			{isMobile && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-          }}
-        >
-          <Image
-            src="/Pixels3.png"
-            alt="pixels"
-            width={146}
-            height={144}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      )}
-
-      {/* Pixel inferior */}
-      {isMobile && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-          }}
-        >
-          <Image
-            src="/Pixels2.png"
-            alt="pixels"
-            width={146}
-            height={144}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      )}
-
-      {(isTablet || isDesktop) && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-          }}
-        >
-          <Image
-            src="/Pixels2.png"
-            alt="pixels"
-            width={180}
-            height={177}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      )}
-
-      {/* Ilustração */}
-      {!isDesktop && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 28,
-            right: 16,
-          }}
-        >
-          <Image
-            src="/Ilustração2.png"
-            alt="ilustração"
-            width={isTablet ? 327 : 280}
-            height={231}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      )}
-		</>
-	);
+      ))}
+    </>
+  );
 }
