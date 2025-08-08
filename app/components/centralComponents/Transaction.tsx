@@ -3,9 +3,11 @@ import { Box, Typography } from "@mui/material";
 import TransactionForm from "./transactionForm";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import TransactionImages from "../decorativeImages/transactionImages";
+import { useTransactions } from "@/app/contexts/TransactionContext";
 
 export default function Transaction() {
-  const { isMobile, isDesktop } = useResponsive();
+  const { isMobile } = useResponsive();
+  const { editingId } = useTransactions();
 
   return (
     <Box
@@ -32,7 +34,7 @@ export default function Transaction() {
           position: "relative",
         }}
       >
-        Nova transação
+        {editingId ? "Editar" : "Nova"} transação
       </Typography>
 
       <TransactionForm />
