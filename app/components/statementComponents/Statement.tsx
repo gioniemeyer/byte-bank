@@ -77,10 +77,10 @@ export default function Statement() {
 
           <Box sx={{ display: "flex" }}>
             <span onClick={handleEditMode}>
-              <EditButton type="edit" />
+              <EditButton type="edit" editing={editMode} />
             </span>
             <span onClick={handleDeleteMode}>
-              <EditButton type="delete" />
+              <EditButton type="delete" editing={deleteMode} />
             </span>
           </Box>
         </Box>
