@@ -25,22 +25,20 @@ export default function Balance() {
   // Pegue o saldo mais recente
   const latestBalance = balanceMock[balanceMock.length - 1]?.balance ?? 0;
 
-  // Cor do texto/ícone/divisor
-  const color = isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)";
+  // Cor do ícone/divisor
+  const iconColor = isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)";
 
   return (
     <Box sx={sx}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontWeight: 600, fontSize: "20px", color, mr: 4 }}>
+        <Typography sx={{ fontWeight: 600, fontSize: "20px", color: "var(--primaryTextColor)", mr: 4 }}>
           Saldo
         </Typography>
         <IconButton onClick={() => setShowBalance((prev) => !prev)}>
           {showBalance ? (
             <VisibilityIcon
               sx={{
-                color: isDesktop
-                  ? "var(--secondaryColor)"
-                  : "var(--primaryTextColor)",
+                color: iconColor,
                 width: "20px",
                 height: "20px",
               }}
@@ -48,9 +46,7 @@ export default function Balance() {
           ) : (
             <VisibilityOffIcon
               sx={{
-                color: isDesktop
-                  ? "var(--secondaryColor)"
-                  : "var(--primaryTextColor)",
+                color: iconColor,
                 width: "20px",
                 height: "20px",
               }}
@@ -63,7 +59,7 @@ export default function Balance() {
           width: "180px",
           height: "16px",
           borderBottomWidth: "2px",
-          borderColor: color,
+          borderColor: iconColor,
         }}
       />
       <Box>
