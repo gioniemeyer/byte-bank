@@ -29,7 +29,10 @@ export default function StatementItem({
         border: isSelected ? "2px solid #47A138" : "none",
         borderRadius: "8px",
         transition: "border 0.2s",
-        backgroundColor: isSelected ? "rgba(71, 161, 56, 0.08)" : "transparent",
+        backgroundColor: isSelected ? "var(--background)" : "transparent",			
+        "&:hover": {
+          backgroundColor: isClickable ? "var(--background)" : "transparent",
+        }
       }}
     >
       <Typography
