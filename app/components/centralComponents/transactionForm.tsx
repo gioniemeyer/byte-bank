@@ -92,7 +92,6 @@ export default function TransactionForm() {
   } else if (isMobile) {
     sx = {
       mt: 3,
-      ml: 2,
       width: "280px",
       display: "flex",
       alignItems: "center",
@@ -103,7 +102,7 @@ export default function TransactionForm() {
     // Tablet
     sx = {
       mt: 3,
-      ml: isMobile ? 2 : 3,
+      ml: 3,
       width: "355px",
       display: "flex",
       alignItems: "left",
