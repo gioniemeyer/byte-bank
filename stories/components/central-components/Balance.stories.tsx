@@ -1,4 +1,6 @@
 import { ResponsiveProvider } from "@/app/contexts/ResponsiveContext";
+import EyeIconDesktopSVG from "../../assets/vectors/eye-icon-desktop.svg";
+import EyeIconMobileSVG from "../../assets/vectors/eye-icon-mobile.svg";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import Balance from "../../../app/components/central-components/Balance";
 import "../../../app/globals.css";
@@ -77,28 +79,7 @@ export const EyeIconDesktop = () => {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 12C2.73 7.61 7.11 4.5 12 4.5C16.89 4.5 21.27 7.61 23 12C21.27 16.39 16.89 19.5 12 19.5C7.11 19.5 2.73 16.39 1 12Z"
-            stroke="var(--secondaryColor)"
-            strokeWidth="2"
-            fill="none"
-          />
-          <circle
-            cx="12"
-            cy="12"
-            r="3.5"
-            stroke="var(--secondaryColor)"
-            strokeWidth="2"
-            fill="none"
-          />
-        </svg>
+        <EyeIconDesktopSVG width={24} height={24} />
       </div>
     </div>
   );
@@ -117,28 +98,7 @@ export const EyeIconMobile = () => {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 12C2.73 7.61 7.11 4.5 12 4.5C16.89 4.5 21.27 7.61 23 12C21.27 16.39 16.89 19.5 12 19.5C7.11 19.5 2.73 16.39 1 12Z"
-            stroke="var(--primaryTextColor)"
-            strokeWidth="2"
-            fill="none"
-          />
-          <circle
-            cx="12"
-            cy="12"
-            r="3.5"
-            stroke="var(--primaryTextColor)"
-            strokeWidth="2"
-            fill="none"
-          />
-        </svg>
+        <EyeIconMobileSVG width={24} height={24} />
       </div>
     </div>
   );
