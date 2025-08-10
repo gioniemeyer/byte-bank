@@ -3,6 +3,7 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
+/** Componente que exibe as imagens decorativas do formulário de transação. */
 export default function TransactionImages() {
   const { isMobile, isTablet, isDesktop } = useResponsive();
 
@@ -11,7 +12,7 @@ export default function TransactionImages() {
     // Pixel superior (tablet e desktop)
     (isTablet || isDesktop) && {
       key: "pixel-top-tablet-desktop",
-      src: "/Pixels3.png",
+      src: "/images/Pixels3.png",
       alt: "pixels",
       width: isTablet || isDesktop ? 180 : 146,
       height: isTablet || isDesktop ? 177 : 144,
@@ -26,7 +27,7 @@ export default function TransactionImages() {
     // Pixel superior (mobile)
     isMobile && {
       key: "pixel-top-mobile",
-      src: "/Pixels3.png",
+      src: "/images/Pixels3.png",
       alt: "pixels",
       width: 146,
       height: 144,
@@ -41,7 +42,7 @@ export default function TransactionImages() {
     // Pixel inferior (mobile)
     isMobile && {
       key: "pixel-bottom-mobile",
-      src: "/Pixels2.png",
+      src: "/images/Pixels2.png",
       alt: "pixels",
       width: 146,
       height: 144,
@@ -56,7 +57,7 @@ export default function TransactionImages() {
     // Pixel inferior (tablet e desktop)
     (isTablet || isDesktop) && {
       key: "pixel-bottom-tablet-desktop",
-      src: "/Pixels2.png",
+      src: "/images/Pixels2.png",
       alt: "pixels",
       width: 180,
       height: 177,
@@ -71,7 +72,7 @@ export default function TransactionImages() {
     // Ilustração (mobile e tablet)
     !isDesktop && {
       key: "illustration",
-      src: "/Ilustração2.png",
+      src: "/images/Ilustração2.png",
       alt: "ilustração",
       width: isTablet ? 327 : 280,
       height: 231,

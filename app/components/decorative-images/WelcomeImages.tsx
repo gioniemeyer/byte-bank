@@ -3,6 +3,7 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
+/** Componente que exibe as imagens decorativas da tela de boas-vindas. */
 export default function WelcomeImages() {
   const { isMobile, isTablet } = useResponsive();
 
@@ -11,7 +12,7 @@ export default function WelcomeImages() {
     // Pixel superior tablet
     isTablet && {
       key: "pixel-top-tablet",
-      src: "/Pixels1.png",
+      src: "/images/Pixels1.png",
       alt: "pixels",
       sx: {
         position: "absolute",
@@ -24,7 +25,7 @@ export default function WelcomeImages() {
     // Pixel superior mobile
     isMobile && {
       key: "pixel-top-mobile",
-      src: "/Pixels1.png",
+      src: "/images/Pixels1.png",
       alt: "pixels",
       sx: {
         position: "absolute",
@@ -37,7 +38,7 @@ export default function WelcomeImages() {
     // Pixel inferior tablet
     isTablet && {
       key: "pixel-bottom-tablet",
-      src: "/Pixels.png",
+      src: "/images/Pixels.png",
       alt: "pixels",
       sx: {
         position: "absolute",
@@ -50,7 +51,7 @@ export default function WelcomeImages() {
     // Pixel inferior mobile
     isMobile && {
       key: "pixel-bottom-mobile",
-      src: "/Pixels.png",
+      src: "/images/Pixels.png",
       alt: "pixels",
       sx: {
         position: "absolute",
@@ -63,7 +64,7 @@ export default function WelcomeImages() {
     // Ilustração
     (isTablet || isMobile) && {
       key: "illustration",
-      src: "/Ilustração1.png",
+      src: "/images/Ilustração1.png",
       alt: "ilustração",
       sx: {
         position: "absolute",

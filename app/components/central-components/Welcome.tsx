@@ -1,11 +1,12 @@
 "use client";
-import { Box, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import Balance from "./Balance";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import WelcomeImages from "../decorativeImages/welcomeImages";
-import { userMock } from "@/app/mocks/userMock";
+import { userMock } from "@/app/mocks/user-mock";
+import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import WelcomeImages from "../decorative-images/WelcomeImages";
+import Balance from "./Balance";
 
+/** Componente que exibe a saudação de boas-vindas ao usuário. */
 export default function Welcome() {
   const { isMobile, isDesktop } = useResponsive();
   const [formatedLetterDate, setFormatedLetterDate] = useState("");

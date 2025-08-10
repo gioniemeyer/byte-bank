@@ -1,9 +1,10 @@
 "use client";
-import { AppBar, Box, Container } from "@mui/material";
-import UserComponent from "./userComponent";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { AppBar, Box, Container } from "@mui/material";
 import DrawerButton from "../buttons/DrawerButton";
+import UserComponent from "./UserComponent";
 
+/** Componente que exibe o cabeçalho da aplicação. */
 export default function Header() {
   const { isMobile, isTablet, isDesktop } = useResponsive();
   const containerWidth = isDesktop ? "1200px" : isTablet ? "600px" : "312px";

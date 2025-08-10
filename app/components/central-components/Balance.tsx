@@ -1,12 +1,13 @@
 "use client";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { balanceMock } from "@/app/mocks/userMock";
-import type { SxProps, Theme } from "@mui/material";
+import { balanceMock } from "@/app/mocks/user-mock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import type { SxProps, Theme } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 
+/** Componente que exibe o saldo da conta do usuário. */
 export default function Balance() {
   const { isMobile, isDesktop } = useResponsive();
   const [showBalance, setShowBalance] = useState(true);

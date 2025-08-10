@@ -1,6 +1,6 @@
 "use client";
+import { StatementItemInterface } from "@/app/mocks/statement-mock";
 import { Box, Divider, Typography } from "@mui/material";
-import { StatementItemInterface } from "@/app/mocks/statementMock";
 
 interface StatementItemProps extends StatementItemInterface {
   onClick?: () => void;
@@ -8,6 +8,7 @@ interface StatementItemProps extends StatementItemInterface {
   isSelected?: boolean;
 }
 
+/** Componente de item do extrato */
 export default function StatementItem({
   date,
   type,

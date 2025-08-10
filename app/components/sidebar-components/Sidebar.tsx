@@ -1,8 +1,9 @@
 "use client";
-import { Box } from "@mui/material";
-import SidebarList from "./sidebarList";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { Box } from "@mui/material";
+import SidebarList from "./SidebarList";
 
+/** Sidebar component */
 export default function Sidebar() {
   const { isTablet, isDesktop } = useResponsive();
 

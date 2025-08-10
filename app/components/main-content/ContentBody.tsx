@@ -1,9 +1,10 @@
 "use client";
-import { Box } from "@mui/material";
-import CentralBox from "../centralComponents/centralBox";
-import Statement from "../statementComponents/Statement";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { Box } from "@mui/material";
+import CentralBox from "../central-components/CentralBox";
+import Statement from "../statement-components/Statement";
 
+/** Componente que exibe o corpo principal da aplicação. */
 export default function ContentBody() {
   const { isMobile } = useResponsive();
 

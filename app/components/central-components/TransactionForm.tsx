@@ -1,6 +1,7 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { useTransactions } from "@/app/contexts/TransactionContext";
+import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
   Button,
@@ -11,8 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import type { SxProps, Theme } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function TransactionForm() {
   const { isMobile, isDesktop } = useResponsive();

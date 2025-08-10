@@ -1,11 +1,12 @@
 "use client";
-import { Box, Typography } from "@mui/material";
-import EditButton from "../buttons/EditButton";
-import StatementItem from "./statementItem";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { useTransactions } from "@/app/contexts/TransactionContext";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import EditButton from "../buttons/EditButton";
+import StatementItem from "./StatementItem";
 
+/** Componente de extrato */
 export default function Statement() {
   const { isMobile, isDesktop } = useResponsive();
   const { transactions, editingId, setEditingId, deleteTransaction } =

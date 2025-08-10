@@ -1,13 +1,14 @@
 "use client";
-import { Box } from "@mui/material";
-import Welcome from "./Welcome";
-import Transaction from "./Transaction";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
+import { Box } from "@mui/material";
+import Transaction from "./Transaction";
+import Welcome from "./Welcome";
 
 interface CentralBoxProps {
   content: string;
 }
 
+/** Componente que exibe o conteúdo central da aplicação. */
 export default function CentralBox({ content }: CentralBoxProps) {
   const { isTablet, isDesktop } = useResponsive();
 
