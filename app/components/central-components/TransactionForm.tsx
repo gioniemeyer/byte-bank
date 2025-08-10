@@ -199,10 +199,10 @@ export default function TransactionForm() {
         placeholder="00,00"
         variant="outlined"
         sx={{
-					borderRadius: "8px",
+          borderRadius: "8px",
           "& .MuiOutlinedInput-root": {
-						height: "48px",
-						backgroundColor: "var(--primaryTextColor)",
+            height: "48px",
+            backgroundColor: "var(--primaryTextColor)",
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: "var(--primaryColor)",
             },
