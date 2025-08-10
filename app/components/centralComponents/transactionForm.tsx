@@ -263,6 +263,7 @@ export default function TransactionForm() {
               fontWeight: 600,
               fontSize: "16px",
               textTransform: "none",
+              borderColor: "var(--primaryColor)",
             }}
           >
             Cancelar
