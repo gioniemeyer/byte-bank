@@ -4,10 +4,39 @@ import EditButton from "../buttons/EditButton";
 import StatementItem from "./statementItem";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { useTransactions } from "@/app/contexts/TransactionContext";
+import { useState } from "react";
 
 export default function Statement() {
   const { isMobile, isDesktop } = useResponsive();
-  const { transactions } = useTransactions();
+  const { transactions, editingId, setEditingId, deleteTransaction } =
+    useTransactions();
+
+  // Estados para modo de edição e exclusão
+  const [editMode, setEditMode] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
+
+  // Handlers dos botões globais
+  const handleEditMode = () => {
+    setEditMode((prev) => !prev);
+    setDeleteMode(false);
+    setEditingId(null);
+  };
+
+  const handleDeleteMode = () => {
+    setDeleteMode((prev) => !prev);
+    setEditMode(false);
+    setEditingId(null);
+  };
+
+  // Handler do clique no item
+  const handleItemClick = (id: number) => {
+    if (editMode) {
+      setEditingId(id);
+    }
+    if (deleteMode) {
+      deleteTransaction(id);
+    }
+  };
 
   return (
     <Box
@@ -47,17 +76,25 @@ export default function Statement() {
           </Typography>
 
           <Box sx={{ display: "flex" }}>
-            <EditButton type="edit" />
-            <EditButton type="delete" />
+            <span onClick={handleEditMode}>
+              <EditButton type="edit" />
+            </span>
+            <span onClick={handleDeleteMode}>
+              <EditButton type="delete" />
+            </span>
           </Box>
         </Box>
 
         {transactions.map((item) => (
           <StatementItem
             key={item.id}
+            id={item.id}
             date={item.date}
             type={item.type}
             value={item.value}
+            isClickable={editMode || deleteMode}
+            isSelected={editingId === item.id && editMode}
+            onClick={() => handleItemClick(item.id)}
           />
         ))}
       </Box>

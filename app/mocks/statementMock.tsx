@@ -1,5 +1,5 @@
 export interface StatementItemInterface {
-  id?: number;
+  id: number;
   date: string;
   type: string;
   value: number;

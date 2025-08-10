@@ -11,16 +11,40 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { SxProps, Theme } from "@mui/material";
 
 export default function TransactionForm() {
   const { isMobile, isDesktop } = useResponsive();
-  const { addTransaction } = useTransactions();
+  const {
+    addTransaction,
+    editTransaction,
+    editingId,
+    setEditingId,
+    transactions,
+  } = useTransactions();
 
+  // Se estiver editando, pega a transação
+  const transaction = editingId
+    ? transactions.find((tx) => tx.id === editingId)
+    : null;
+
+  // Estado do formulário
   const [type, setTransaction] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+
+  // Preenche os campos ao editar
+  useEffect(() => {
+    if (transaction) {
+      setTransaction(transaction.type === "Depósito" ? "d" : "t");
+      setValue(transaction.value.toFixed(2).replace(".", ","));
+    } else {
+      setTransaction("");
+      setValue("");
+    }
+    setError("");
+  }, [transaction]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setTransaction(event.target.value as string);
@@ -36,11 +60,18 @@ export default function TransactionForm() {
 
     setError("");
 
-    addTransaction({
-      date: new Date().toISOString(),
+    const transactionData = {
+      date: transaction ? transaction.date : new Date().toISOString(),
       type: type === "d" ? "Depósito" : "Transferência",
       value: parseFloat(value.replace(",", ".")),
-    });
+    };
+
+    if (editingId) {
+      editTransaction(editingId, transactionData);
+      setEditingId(null);
+    } else {
+      addTransaction(transactionData);
+    }
 
     setTransaction("");
     setValue("");
@@ -197,28 +228,48 @@ export default function TransactionForm() {
         }}
       />
 
-      <Button
-        onClick={submitForm}
-        disabled={!type || !value}
-        variant="contained"
-        sx={{
-          color: "var(--primaryTextColor)",
-          backgroundColor: "var(--primaryColor)",
-          width: isMobile ? "144px" : "250px",
-          height: "48px",
-          borderRadius: "8px",
-          fontWeight: 600,
-          fontSize: "16px",
-          textTransform: "none",
-          "&.Mui-disabled": {
-            backgroundColor: "var(--thirdTextColor)",
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <Button
+          onClick={submitForm}
+          disabled={!type || !value}
+          variant="contained"
+          sx={{
             color: "var(--primaryTextColor)",
-            opacity: 0.9,
-          },
-        }}
-      >
-        Concluir transação
-      </Button>
+            backgroundColor: "var(--primaryColor)",
+            width: isMobile ? "144px" : "250px",
+            height: "48px",
+            borderRadius: "8px",
+            fontWeight: 600,
+            fontSize: "16px",
+            textTransform: "none",
+            "&.Mui-disabled": {
+              backgroundColor: "var(--thirdTextColor)",
+              color: "var(--primaryTextColor)",
+              opacity: 0.9,
+            },
+          }}
+        >
+          {editingId ? "Salvar edição" : "Concluir transação"}
+        </Button>
+        {editingId && (
+          <Button
+            onClick={() => setEditingId(null)}
+            variant="outlined"
+            sx={{
+              color: "var(--primaryColor)",
+              width: isMobile ? "144px" : "250px",
+              height: "48px",
+              borderRadius: "8px",
+              fontWeight: 600,
+              fontSize: "16px",
+              textTransform: "none",
+              borderColor: "var(--primaryColor)",
+            }}
+          >
+            Cancelar
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
