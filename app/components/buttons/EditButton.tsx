@@ -5,12 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 interface EditButton {
 	type: string;
+	editing: boolean;
 }
 
-export default function EditButton({ type }: EditButton) {
+export default function EditButton({ type, editing }: EditButton) {
   return (
 		<IconButton sx={{
-			backgroundColor: 'var(--primaryColor)',
+			backgroundColor: editing ? 'var(--secondaryColor)' : 'var(--primaryColor)',
 			color: "var(--primaryTextColor)",
 			width: '40px',
 			height: '40px',
