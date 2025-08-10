@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import SidebarList from "../sidebar-components/SidebarList";
 
-/** Botão utilizado para abrir o menu lateral (Drawer) na versão mobile. */
 export default function DrawerButton() {
   const [open, setOpen] = useState(false);
 
