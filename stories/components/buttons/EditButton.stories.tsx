@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import EditButton from '../../../app/components/buttons/EditButton';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import EditButton from "../../../app/components/buttons/EditButton";
 import "../../../app/globals.css";
 
 const meta: Meta<typeof EditButton> = {
-  title: 'Components/Buttons/EditButton',
+  title: "Components/Buttons/EditButton",
   component: EditButton,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     type: {
-      control: { type: 'radio' },
-      options: ['edit', 'delete'],
-      description: 'Tipo do botão: edit ou delete',
+      control: { type: "radio" },
+      options: ["edit", "delete"],
+      description: "Button type: edit or delete",
     },
     editing: {
-      control: { type: 'boolean' },
-      description: 'Aplica o estilo de edição (backgroundColor secundário)',
+      control: { type: "boolean" },
+      description: "Applies editing style (secondary backgroundColor)",
       defaultValue: false,
     },
   },
@@ -28,32 +28,32 @@ type Story = StoryObj<typeof EditButton>;
 
 export const EditPrimary: Story = {
   args: {
-    type: 'edit',
+    type: "edit",
     editing: false, // primaryColor
   },
-  render: (args) => <EditButton type={args.type} editing={!!args.editing} />
+  render: (args) => <EditButton type={args.type} editing={!!args.editing} />,
 };
 
 export const EditSecondary: Story = {
   args: {
-    type: 'edit',
+    type: "edit",
     editing: true, // secondaryColor
   },
-  render: (args) => <EditButton type={args.type} editing={!!args.editing} />
+  render: (args) => <EditButton type={args.type} editing={!!args.editing} />,
 };
 
 export const DeletePrimary: Story = {
   args: {
-    type: 'delete',
+    type: "delete",
     editing: false, // primaryColor
   },
-  render: (args) => <EditButton type={args.type} editing={!!args.editing} />
+  render: (args) => <EditButton type={args.type} editing={!!args.editing} />,
 };
 
 export const DeleteSecondary: Story = {
   args: {
-    type: 'delete',
+    type: "delete",
     editing: true, // secondaryColor
   },
-  render: (args) => <EditButton type={args.type} editing={!!args.editing} />
+  render: (args) => <EditButton type={args.type} editing={!!args.editing} />,
 };

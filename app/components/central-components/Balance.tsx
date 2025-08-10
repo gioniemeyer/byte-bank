@@ -7,7 +7,6 @@ import type { SxProps, Theme } from "@mui/material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 
-/** Componente que exibe o saldo da conta do usuário. */
 export default function Balance() {
   const { isMobile, isDesktop } = useResponsive();
   const [showBalance, setShowBalance] = useState(true);
