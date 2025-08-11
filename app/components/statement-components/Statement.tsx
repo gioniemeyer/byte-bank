@@ -3,6 +3,7 @@ import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { useTransactions } from "@/app/contexts/TransactionContext";
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import FormModal from "../central-components/FormModal";
 import EditButton from "../buttons/EditButton";
 import StatementItem from "./StatementItem";
 
@@ -15,6 +16,7 @@ export default function Statement() {
   // Estados para modo de edição e exclusão
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // Handlers dos botões globais
   const handleEditMode = () => {
@@ -29,10 +31,21 @@ export default function Statement() {
     setEditingId(null);
   };
 
+  const openModal = () => setOpen(true);
+
+  const closeModal = () => {
+    setOpen(false);
+    setEditingId(null);
+  };
+
   // Handler do clique no item
   const handleItemClick = (id: number) => {
     if (editMode) {
       setEditingId(id);
+
+      if (!isDesktop) {
+        openModal();
+      }
     }
     if (deleteMode) {
       deleteTransaction(id);
@@ -98,6 +111,8 @@ export default function Statement() {
             onClick={() => handleItemClick(item.id)}
           />
         ))}
+
+        <FormModal open={open} onClose={closeModal} />
       </Box>
     </Box>
   );
