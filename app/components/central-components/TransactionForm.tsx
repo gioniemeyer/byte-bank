@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export default function TransactionForm() {
+interface TransactionFormProps {
+  onCancel?: () => void;
+}
+
+export default function TransactionForm({ onCancel }: TransactionFormProps) {
   const { isMobile, isDesktop } = useResponsive();
   const {
     addTransaction,
@@ -69,6 +73,10 @@ export default function TransactionForm() {
     if (editingId) {
       editTransaction(editingId, transactionData);
       setEditingId(null);
+
+      if (!isDesktop) {
+        onCancel?.();
+      }
     } else {
       addTransaction(transactionData);
     }
@@ -252,7 +260,13 @@ export default function TransactionForm() {
         </Button>
         {editingId && (
           <Button
-            onClick={() => setEditingId(null)}
+            onClick={() => {
+              setEditingId(null);
+              
+              if (!isDesktop) {
+                onCancel?.();
+              }
+            }}
             variant="outlined"
             sx={{
               color: "var(--primaryColor)",
