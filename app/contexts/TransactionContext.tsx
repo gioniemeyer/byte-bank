@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { statementMock, StatementItemInterface } from "../mocks/statementMock";
+import { statementMock, StatementItemInterface } from "../mocks/statement-mock";
 
 type TransactionContextType = {
   transactions: StatementItemInterface[];

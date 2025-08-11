@@ -1,6 +1,20 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Prerequisites
+
+Make sure you have Node.js installed (version 18 or higher. Example: v22.18.0):
+
+```bash
+node -v
+```
+
 ## Getting Started
+
+Install the project dependencies:
+
+```bash
+npm install
+```
 
 First, run the development server:
 

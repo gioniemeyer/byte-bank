@@ -1,7 +1,6 @@
 "use client";
-
 import React, { createContext, useContext, ReactNode, useEffect, useState } from "react";
-import { useMediaQuery } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 // Defina o tipo do contexto
 type ResponsiveContextType = {
@@ -17,15 +16,16 @@ const ResponsiveContext = createContext<ResponsiveContextType | undefined>(
 
 export function ResponsiveProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
-  const isMobile = useMediaQuery("(max-width:360px)");
-  const isTablet = useMediaQuery("(min-width:361px) and (max-width:720px)");
-  const isDesktop = useMediaQuery("(min-width:721px)");
+  const theme = useTheme();
+  // MUI breakpoints: sm = 600, md = 900, lg = 1200
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // até 599px
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg")); // 600px até 1199px
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg")); // 1200px ou mais
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Evita o render até estar no client
   if (!mounted) return null;
 
   return (

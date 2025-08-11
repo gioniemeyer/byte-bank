@@ -1,8 +1,8 @@
 "use client";
 import { Container } from "@mui/material";
-import Sidebar from "./sidebarComponents/Sidebar";
-import Statement from "./statementComponents/Statement";
-import ContentBody from "./mainContent/ContentBody";
+import Sidebar from "./sidebar-components/Sidebar";
+import Statement from "./statement-components/Statement";
+import ContentBody from "./main-content/ContentBody";
 import { useResponsive } from "../contexts/ResponsiveContext";
 
 export default function BodyContainer() {
