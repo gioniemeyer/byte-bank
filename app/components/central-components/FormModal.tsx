@@ -9,25 +9,25 @@ interface FormModalProps {
 }
 
 export default function FormModal({ open, onClose }: FormModalProps) {
-	const { isMobile } = useResponsive();
+  const { isMobile } = useResponsive();
 
   return (
-		<Dialog open={open} slotProps={{
-			paper: {
-				sx: {
-					margin: 0,
-				},
-			},
-		}}>
-			<DialogTitle sx={{
-				color: "var(--thirdTextColor)",
-				ml: isMobile ? 0 : 3,
-			}}>
-				Editar transação
-			</DialogTitle>
-			<DialogContent>
-				<TransactionForm onCancel={onClose} />
-			</DialogContent>
-		</Dialog>
+    <Dialog open={open} slotProps={{
+      paper: {
+        sx: {
+          margin: 0,
+        },
+      },
+    }}>
+      <DialogTitle sx={{
+        color: "var(--thirdTextColor)",
+        ml: isMobile ? 0 : 3,
+      }}>
+        Editar transação
+      </DialogTitle>
+      <DialogContent>
+        <TransactionForm onCancel={onClose} />
+      </DialogContent>
+    </Dialog>
   );
 }
