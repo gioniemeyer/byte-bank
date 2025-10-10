@@ -1,6 +1,7 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
+// import { useTransactions } from "@/app/contexts/TransactionContext"; // REMOVER
+import { useTransactions } from "@/app/recoil/hooks/useTransactions"; // ADICIONAR
 import { Box, Typography } from "@mui/material";
 import TransactionImages from "../decorative-images/TransactionImages";
 import TransactionForm from "./TransactionForm";
@@ -21,7 +22,6 @@ export default function Transaction() {
         justifyContent: "flex-start",
       }}
     >
-      {/* Imagens decorativas */}
       <TransactionImages />
 
       <Typography

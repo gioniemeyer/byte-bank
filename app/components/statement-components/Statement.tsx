@@ -1,6 +1,7 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
+// import { useTransactions } from "@/app/contexts/TransactionContext"; // REMOVER
+import { useTransactions } from "@/app/recoil/hooks/useTransactions"; // ADICIONAR
 import {
   Box,
   Typography,
@@ -22,20 +23,17 @@ export default function Statement() {
   const { transactions, editingId, setEditingId, deleteTransaction } =
     useTransactions();
 
-  // Estados para modo de edição e exclusão
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Filtros
   const [filters, setFilters] = useState({
     month: "",
     transactionType: "",
   });
 
-  // Paginação
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(8); // valor inicial
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const optionsRowsPerPage = [5, 8, 10, 20];
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
@@ -45,10 +43,9 @@ export default function Statement() {
   const handleRowsPerPageChange = (event: { target: { value: number } }) => {
     const value = Number(event.target.value);
     setRowsPerPage(value);
-    setPage(1); // reset para primeira página ao mudar o tamanho
+    setPage(1);
   };
 
-  // Filtro
   const filteredTransactions = useMemo(() => {
     const monthQuery = (filters.month || "").trim().toLowerCase();
 
@@ -64,26 +61,22 @@ export default function Statement() {
     });
   }, [transactions, filters.month, filters.transactionType]);
 
-  // Total de páginas
   const totalPages = Math.max(
     1,
     Math.ceil(filteredTransactions.length / rowsPerPage)
   );
 
-  // Itens paginados
   const paginated = useMemo(() => {
     const currentPage = Math.min(Math.max(page, 1), totalPages);
     const start = (currentPage - 1) * rowsPerPage;
     return filteredTransactions.slice(start, start + rowsPerPage);
   }, [filteredTransactions, page, rowsPerPage, totalPages]);
 
-  // Sincroniza page se filtros mudarem e reduzirem o total de páginas
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
     if (page < 1) setPage(1);
   }, [page, totalPages]);
 
-  // Handlers dos botões globais
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
     setDeleteMode(false);
@@ -102,7 +95,6 @@ export default function Statement() {
     setEditingId(null);
   };
 
-  // Handler do clique no item
   const handleItemClick = (id: number) => {
     if (editMode) {
       setEditingId(id);
@@ -147,11 +139,11 @@ export default function Statement() {
             initialFilters={filters}
             onChange={(f) => {
               setFilters(f);
-              setPage(1); // reset página ao mudar filtros
+              setPage(1);
             }}
             onApply={(f) => {
               setFilters(f);
-              setPage(1); // reset página ao aplicar filtros
+              setPage(1);
             }}
           />
           <span onClick={handleEditMode}>
@@ -191,7 +183,7 @@ export default function Statement() {
         ))}
       </Box>
 
-      {/* Rodapé: seletor de rowsPerPage + paginação */}
+      {/* Rodapé */}
       <Stack
         direction="row"
         alignItems="center"

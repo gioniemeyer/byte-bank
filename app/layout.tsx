@@ -1,11 +1,12 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
+import RecoilBoundary from "./providers/RecoilBoundary";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Bytebank"
+  title: "Bytebank",
 };
 
 export default function RootLayout({
@@ -15,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <RecoilBoundary>{children}</RecoilBoundary>
+      </body>
     </html>
   );
 }

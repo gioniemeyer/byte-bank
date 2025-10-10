@@ -1,6 +1,11 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
+import { TransactionType } from "@/app/recoil/atoms/transactionAtoms";
+import {
+  NewTransaction,
+  useTransactions,
+} from "@/app/recoil/hooks/useTransactions";
+
 import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
@@ -28,17 +33,15 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
     transactions,
   } = useTransactions();
 
-  // Se estiver editando, pega a transação
   const transaction = editingId
     ? transactions.find((tx) => tx.id === editingId)
     : null;
 
-  // Estado do formulário
-  const [type, setTransaction] = useState("");
+  // Tipar para domínio finito e ajudar o TS
+  const [type, setTransaction] = useState<"" | "d" | "t">("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  // Preenche os campos ao editar
   useEffect(() => {
     if (transaction) {
       setTransaction(transaction.type === "Depósito" ? "d" : "t");
@@ -51,12 +54,11 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
   }, [transaction]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setTransaction(event.target.value as string);
+    setTransaction(event.target.value as "d" | "t" | "");
   };
 
   const submitForm = () => {
     const valueRegex = /^\d+,\d{2}$/;
-
     if (!valueRegex.test(value)) {
       setError("Informe o valor no formato 00,00");
       return;
@@ -64,16 +66,17 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
 
     setError("");
 
-    const transactionData = {
+    const txType: TransactionType = type === "d" ? "Depósito" : "Transferência";
+
+    const transactionData: NewTransaction = {
       date: transaction ? transaction.date : new Date().toISOString(),
-      type: type === "d" ? "Depósito" : "Transferência",
+      type: txType,
       value: parseFloat(value.replace(",", ".")),
     };
 
     if (editingId) {
       editTransaction(editingId, transactionData);
       setEditingId(null);
-
       if (!isDesktop) {
         onCancel?.();
       }
@@ -85,7 +88,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
     setValue("");
   };
 
-  // Responsividade do container principal
+  // Responsividade do container principal (inalterado)
   let sx: SxProps<Theme>;
   if (isDesktop) {
     sx = {
@@ -107,7 +110,6 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
       gap: 2,
     };
   } else {
-    // Tablet
     sx = {
       mt: 3,
       ml: 3,
@@ -262,7 +264,6 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
           <Button
             onClick={() => {
               setEditingId(null);
-              
               if (!isDesktop) {
                 onCancel?.();
               }
