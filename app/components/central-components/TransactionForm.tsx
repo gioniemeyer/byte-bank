@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 interface TransactionFormProps {
   onCancel?: () => void;
@@ -20,6 +21,11 @@ interface TransactionFormProps {
 
 export default function TransactionForm({ onCancel }: TransactionFormProps) {
   const { isMobile, isDesktop } = useResponsive();
+  const transactionTypes = useSelector(
+    (state: { transactionTypes: { types: string[] } }) =>
+      state.transactionTypes.types
+  );
+
   const {
     addTransaction,
     editTransaction,
@@ -158,26 +164,19 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
             },
           }}
         >
-          <MenuItem
-            value="d"
-            sx={{
-              "&:hover, &.Mui-selected, &.Mui-selected:hover": {
-                backgroundColor: "var(--background)",
-              },
-            }}
-          >
-            Depósito
-          </MenuItem>
-          <MenuItem
-            value="t"
-            sx={{
-              "&:hover, &.Mui-selected, &.Mui-selected:hover": {
-                backgroundColor: "var(--background)",
-              },
-            }}
-          >
-            Transferência
-          </MenuItem>
+          {transactionTypes.map((type) => (
+            <MenuItem
+              key={type}
+              value={type}
+              sx={{
+                "&:hover, &.Mui-selected, &.Mui-selected:hover": {
+                  backgroundColor: "var(--background)",
+                },
+              }}
+            >
+              {type}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
 
@@ -262,7 +261,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
           <Button
             onClick={() => {
               setEditingId(null);
-              
+
               if (!isDesktop) {
                 onCancel?.();
               }

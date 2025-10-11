@@ -15,6 +15,7 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 // FilterButton.tsx
 interface FilterValues {
@@ -35,6 +36,10 @@ export default function FilterButton({
 }: FilterButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const transactionTypes = useSelector(
+    (state: { transactionTypes: { types: string[] } }) =>
+      state.transactionTypes.types
+  );
 
   const [filters, setFilters] = useState<FilterValues>({
     month: initialFilters?.month ?? "",
@@ -134,8 +139,12 @@ export default function FilterButton({
               <MenuItem value="">
                 <em>Todos</em>
               </MenuItem>
-              <MenuItem value="Depósito">Depósito</MenuItem>
-              <MenuItem value="Transferência">Transferência</MenuItem>
+              {}
+              {transactionTypes.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
