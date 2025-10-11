@@ -1,6 +1,7 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
 import { useTransactions } from "@/app/contexts/TransactionContext";
+import { addTransaction } from "@/app/features/transactions";
 import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
@@ -13,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface TransactionFormProps {
   onCancel?: () => void;
@@ -21,18 +22,14 @@ interface TransactionFormProps {
 
 export default function TransactionForm({ onCancel }: TransactionFormProps) {
   const { isMobile, isDesktop } = useResponsive();
+  const dispatch = useDispatch();
   const transactionTypes = useSelector(
     (state: { transactionTypes: { types: string[] } }) =>
       state.transactionTypes.types
   );
 
-  const {
-    addTransaction,
-    editTransaction,
-    editingId,
-    setEditingId,
-    transactions,
-  } = useTransactions();
+  const { editTransaction, editingId, setEditingId, transactions } =
+    useTransactions();
 
   // Se estiver editando, pega a transação
   const transaction = editingId
@@ -84,7 +81,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
         onCancel?.();
       }
     } else {
-      addTransaction(transactionData);
+      dispatch(addTransaction(transactionData));
     }
 
     setTransaction("");

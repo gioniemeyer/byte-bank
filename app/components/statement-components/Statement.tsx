@@ -16,16 +16,28 @@ import FormModal from "../central-components/FormModal";
 import EditButton from "../buttons/EditButton";
 import StatementItem from "./StatementItem";
 import FilterButton from "../buttons/FilterButton";
+import { useSelector } from "react-redux";
 
 export default function Statement() {
   const { isMobile, isDesktop } = useResponsive();
-  const { transactions, editingId, setEditingId, deleteTransaction } =
-    useTransactions();
+  const { editingId, setEditingId, deleteTransaction } = useTransactions();
 
   // Estados para modo de edição e exclusão
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [open, setOpen] = useState(false);
+  const transactions = useSelector(
+    (state: {
+      transactions: {
+        transactions: {
+          id: number;
+          date: string;
+          type: string;
+          value: number;
+        }[];
+      };
+    }) => state.transactions.transactions
+  );
 
   // Filtros
   const [filters, setFilters] = useState({
