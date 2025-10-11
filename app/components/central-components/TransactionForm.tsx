@@ -1,7 +1,13 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
-import { addTransaction } from "@/app/features/transactions";
+import {
+  addTransaction,
+  editTransaction,
+  selectEditingId,
+  selectTransactions,
+  selectTransactionById,
+  setEditingId,
+} from "@/app/features/transactions";
 import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
@@ -23,38 +29,43 @@ interface TransactionFormProps {
 export default function TransactionForm({ onCancel }: TransactionFormProps) {
   const { isMobile, isDesktop } = useResponsive();
   const dispatch = useDispatch();
+
+  // selectors
+  const editingId = useSelector(selectEditingId);
+  const transactions = useSelector(selectTransactions);
+  // pega a transação diretamente do store (estável)
+  const transaction = useSelector((state) =>
+    selectTransactionById(state, editingId)
+  );
+
   const transactionTypes = useSelector(
     (state: { transactionTypes: { types: string[] } }) =>
       state.transactionTypes.types
   );
 
-  const { editTransaction, editingId, setEditingId, transactions } =
-    useTransactions();
-
-  // Se estiver editando, pega a transação
-  const transaction = editingId
-    ? transactions.find((tx) => tx.id === editingId)
-    : null;
-
-  // Estado do formulário
-  const [type, setTransaction] = useState("");
+  // Estado do formulário (use nomes claros)
+  const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  // Preenche os campos ao editar
+  // Preencher os campos ao entrar em modo edição
   useEffect(() => {
-    if (transaction) {
-      setTransaction(transaction.type);
-      setValue(transaction.value.toFixed(2).replace(".", ","));
+    if (editingId && transaction) {
+      setType(transaction.type ?? "");
+      setValue(
+        typeof transaction.value === "number"
+          ? transaction.value.toFixed(2).replace(".", ",")
+          : ""
+      );
     } else {
-      setTransaction("");
+      setType("");
       setValue("");
     }
     setError("");
-  }, [transaction]);
+  }, [editingId, transaction]); // essas duas são estáveis agora
 
   const handleChange = (event: SelectChangeEvent) => {
-    setTransaction(event.target.value as string);
+    setType(event.target.value as string);
   };
 
   const submitForm = () => {
@@ -76,19 +87,20 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
           : parseFloat(value.replace(",", ".")),
     };
 
-    if (editingId) {
-      editTransaction(editingId, transactionData);
-      setEditingId(null);
-
-      if (!isDesktop) {
-        onCancel?.();
-      }
+    if (editingId && transaction) {
+      dispatch(editTransaction({ id: editingId, updated: transactionData }));
+      dispatch(setEditingId(null));
     } else {
       dispatch(addTransaction(transactionData));
     }
 
-    setTransaction("");
+    // Limpa campos depois de despachar
+    setType("");
     setValue("");
+
+    if (!isDesktop) {
+      onCancel?.();
+    }
   };
 
   // Responsividade do container principal
@@ -113,7 +125,6 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
       gap: 2,
     };
   } else {
-    // Tablet
     sx = {
       mt: 3,
       ml: 3,
@@ -164,17 +175,17 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
             },
           }}
         >
-          {transactionTypes.map((type) => (
+          {transactionTypes.map((t) => (
             <MenuItem
-              key={type}
-              value={type}
+              key={t}
+              value={t}
               sx={{
                 "&:hover, &.Mui-selected, &.Mui-selected:hover": {
                   backgroundColor: "var(--background)",
                 },
               }}
             >
-              {type}
+              {t}
             </MenuItem>
           ))}
         </Select>
@@ -260,8 +271,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
         {editingId && (
           <Button
             onClick={() => {
-              setEditingId(null);
-
+              dispatch(setEditingId(null));
               if (!isDesktop) {
                 onCancel?.();
               }
