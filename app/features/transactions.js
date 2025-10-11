@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   transactions: [],
@@ -16,6 +16,12 @@ const transactionsSlice = createSlice({
     },
   },
 });
+
+export const selectCurrentBalance = createSelector(
+  (state) => state.transactions.transactions,
+  (transactions) =>
+    transactions.reduce((acc, transaction) => acc + transaction.value, 0)
+);
 
 export const { addTransaction } = transactionsSlice.actions;
 

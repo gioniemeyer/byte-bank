@@ -44,7 +44,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
   // Preenche os campos ao editar
   useEffect(() => {
     if (transaction) {
-      setTransaction(transaction.type === "Depósito" ? "d" : "t");
+      setTransaction(transaction.type);
       setValue(transaction.value.toFixed(2).replace(".", ","));
     } else {
       setTransaction("");
@@ -69,8 +69,11 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
 
     const transactionData = {
       date: transaction ? transaction.date : new Date().toISOString(),
-      type: type === "d" ? "Depósito" : "Transferência",
-      value: parseFloat(value.replace(",", ".")),
+      type: type,
+      value:
+        type === "Transferência"
+          ? -parseFloat(value.replace(",", "."))
+          : parseFloat(value.replace(",", ".")),
     };
 
     if (editingId) {
@@ -146,7 +149,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
                 </span>
               );
             }
-            return selected === "d" ? "Depósito" : "Transferência";
+            return selected;
           }}
           sx={{
             "& .MuiOutlinedInput-notchedOutline": {
