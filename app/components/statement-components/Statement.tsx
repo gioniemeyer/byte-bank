@@ -30,7 +30,7 @@ export default function Statement() {
     (state: {
       transactions: {
         transactions: {
-          id: number;
+          id: string;
           date: string;
           type: string;
           value: number;
@@ -115,7 +115,7 @@ export default function Statement() {
   };
 
   // Handler do clique no item
-  const handleItemClick = (id: number) => {
+  const handleItemClick = (id: string) => {
     if (editMode) {
       setEditingId(id);
       if (!isDesktop) openModal();
@@ -192,7 +192,7 @@ export default function Statement() {
         {paginated.map((item, index) => (
           <StatementItem
             key={item.id || index}
-            id={item.id || index}
+            id={item.id}
             date={item.date}
             type={item.type}
             value={item.value}

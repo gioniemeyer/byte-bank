@@ -4,14 +4,13 @@ import { statementMock, StatementItemInterface } from "../mocks/statement-mock";
 
 type TransactionContextType = {
   transactions: StatementItemInterface[];
-  addTransaction: (transaction: Omit<StatementItemInterface, "id">) => void;
   editTransaction: (
-    id: number,
+    id: string,
     updated: Omit<StatementItemInterface, "id">
   ) => void;
-  deleteTransaction: (id: number) => void;
-  editingId: number | null;
-  setEditingId: (id: number | null) => void;
+  deleteTransaction: (id: string) => void;
+  editingId: string | null;
+  setEditingId: (id: string | null) => void;
 };
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -21,18 +20,10 @@ const TransactionContext = createContext<TransactionContextType | undefined>(
 export const TransactionProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] =
     useState<StatementItemInterface[]>(statementMock);
-  const [editingId, setEditingId] = useState<number | null>(null);
-
-  const addTransaction = (newTx: Omit<StatementItemInterface, "id">) => {
-    const nextId =
-      transactions.length > 0
-        ? Math.max(...transactions.map((t) => t.id ?? 0)) + 1
-        : 1;
-    setTransactions((prev) => [...prev, { ...newTx, id: nextId }]);
-  };
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const editTransaction = (
-    id: number,
+    id: string,
     updated: Omit<StatementItemInterface, "id">
   ) => {
     setTransactions((prev) =>
@@ -40,7 +31,7 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const deleteTransaction = (id: number) => {
+  const deleteTransaction = (id: string) => {
     setTransactions((prev) => prev.filter((tx) => tx.id !== id));
   };
 
@@ -48,7 +39,6 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
     <TransactionContext.Provider
       value={{
         transactions,
-        addTransaction,
         editTransaction,
         deleteTransaction,
         editingId,

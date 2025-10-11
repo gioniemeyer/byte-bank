@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-
+import { v4 as uuid } from "uuid";
 const initialState = {
   transactions: [],
 };
@@ -11,7 +11,7 @@ const transactionsSlice = createSlice({
     addTransaction: (state, action) => {
       state.transactions.push({
         ...action.payload,
-        id: state.transactions.length + 1,
+        id: uuid(),
       });
     },
   },
