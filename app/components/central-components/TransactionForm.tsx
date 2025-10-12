@@ -1,6 +1,13 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
+import {
+  addTransaction,
+  editTransaction,
+  selectEditingId,
+  selectTransactions,
+  selectTransactionById,
+  setEditingId,
+} from "@/app/features/transactions";
 import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
@@ -13,6 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface TransactionFormProps {
   onCancel?: () => void;
@@ -20,38 +28,44 @@ interface TransactionFormProps {
 
 export default function TransactionForm({ onCancel }: TransactionFormProps) {
   const { isMobile, isDesktop } = useResponsive();
-  const {
-    addTransaction,
-    editTransaction,
-    editingId,
-    setEditingId,
-    transactions,
-  } = useTransactions();
+  const dispatch = useDispatch();
 
-  // Se estiver editando, pega a transação
-  const transaction = editingId
-    ? transactions.find((tx) => tx.id === editingId)
-    : null;
+  // selectors
+  const editingId = useSelector(selectEditingId);
+  const transactions = useSelector(selectTransactions);
+  // pega a transação diretamente do store (estável)
+  const transaction = useSelector((state) =>
+    selectTransactionById(state, editingId)
+  );
 
-  // Estado do formulário
-  const [type, setTransaction] = useState("");
+  const transactionTypes = useSelector(
+    (state: { transactionTypes: { types: string[] } }) =>
+      state.transactionTypes.types
+  );
+
+  // Estado do formulário (use nomes claros)
+  const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  // Preenche os campos ao editar
+  // Preencher os campos ao entrar em modo edição
   useEffect(() => {
-    if (transaction) {
-      setTransaction(transaction.type === "Depósito" ? "d" : "t");
-      setValue(transaction.value.toFixed(2).replace(".", ","));
+    if (editingId && transaction) {
+      setType(transaction.type ?? "");
+      setValue(
+        typeof transaction.value === "number"
+          ? transaction.value.toFixed(2).replace(".", ",")
+          : ""
+      );
     } else {
-      setTransaction("");
+      setType("");
       setValue("");
     }
     setError("");
-  }, [transaction]);
+  }, [editingId, transaction]); // essas duas são estáveis agora
 
   const handleChange = (event: SelectChangeEvent) => {
-    setTransaction(event.target.value as string);
+    setType(event.target.value as string);
   };
 
   const submitForm = () => {
@@ -66,23 +80,27 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
 
     const transactionData = {
       date: transaction ? transaction.date : new Date().toISOString(),
-      type: type === "d" ? "Depósito" : "Transferência",
-      value: parseFloat(value.replace(",", ".")),
+      type: type,
+      value:
+        type === "Transferência"
+          ? -parseFloat(value.replace(",", "."))
+          : parseFloat(value.replace(",", ".")),
     };
 
-    if (editingId) {
-      editTransaction(editingId, transactionData);
-      setEditingId(null);
-
-      if (!isDesktop) {
-        onCancel?.();
-      }
+    if (editingId && transaction) {
+      dispatch(editTransaction({ id: editingId, updated: transactionData }));
+      dispatch(setEditingId(null));
     } else {
-      addTransaction(transactionData);
+      dispatch(addTransaction(transactionData));
     }
 
-    setTransaction("");
+    // Limpa campos depois de despachar
+    setType("");
     setValue("");
+
+    if (!isDesktop) {
+      onCancel?.();
+    }
   };
 
   // Responsividade do container principal
@@ -107,7 +125,6 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
       gap: 2,
     };
   } else {
-    // Tablet
     sx = {
       mt: 3,
       ml: 3,
@@ -143,7 +160,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
                 </span>
               );
             }
-            return selected === "d" ? "Depósito" : "Transferência";
+            return selected;
           }}
           sx={{
             "& .MuiOutlinedInput-notchedOutline": {
@@ -158,26 +175,19 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
             },
           }}
         >
-          <MenuItem
-            value="d"
-            sx={{
-              "&:hover, &.Mui-selected, &.Mui-selected:hover": {
-                backgroundColor: "var(--background)",
-              },
-            }}
-          >
-            Depósito
-          </MenuItem>
-          <MenuItem
-            value="t"
-            sx={{
-              "&:hover, &.Mui-selected, &.Mui-selected:hover": {
-                backgroundColor: "var(--background)",
-              },
-            }}
-          >
-            Transferência
-          </MenuItem>
+          {transactionTypes.map((t) => (
+            <MenuItem
+              key={t}
+              value={t}
+              sx={{
+                "&:hover, &.Mui-selected, &.Mui-selected:hover": {
+                  backgroundColor: "var(--background)",
+                },
+              }}
+            >
+              {t}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
 
@@ -261,8 +271,7 @@ export default function TransactionForm({ onCancel }: TransactionFormProps) {
         {editingId && (
           <Button
             onClick={() => {
-              setEditingId(null);
-              
+              dispatch(setEditingId(null));
               if (!isDesktop) {
                 onCancel?.();
               }

@@ -1,5 +1,5 @@
 export interface StatementItemInterface {
-  id: number;
+  id: string;
   date: string;
   type: string;
   value: number;
@@ -7,25 +7,25 @@ export interface StatementItemInterface {
 
 export const statementMock: StatementItemInterface[] = [
   {
-    id: 1,
+    id: "1",
     date: "2022-11-18T12:00:00",
     type: "Depósito",
     value: 150,
   },
   {
-    id: 2,
+    id: "2",
     date: "2022-11-21T12:00:00",
     type: "Depósito",
     value: 100,
   },
   {
-    id: 3,
+    id: "3",
     date: "2022-11-21T12:00:00",
     type: "Depósito",
     value: 50,
   },
   {
-    id: 4,
+    id: "4",
     date: "2022-11-21T12:00:00",
     type: "Transferência",
     value: 500,

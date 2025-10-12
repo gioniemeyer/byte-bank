@@ -1,14 +1,15 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import TransactionImages from "../decorative-images/TransactionImages";
 import TransactionForm from "./TransactionForm";
+import { selectEditingId } from "@/app/features/transactions";
 
-/** Componente que exibe o formulário de transação. */
+/** Componente que exibe o formulário de transação */
 export default function Transaction() {
   const { isMobile } = useResponsive();
-  const { editingId } = useTransactions();
+  const editingId = useSelector(selectEditingId);
 
   return (
     <Box
@@ -38,6 +39,7 @@ export default function Transaction() {
         {editingId ? "Editar" : "Nova"} transação
       </Typography>
 
+      {/* Formulário de transação conectado ao Redux */}
       <TransactionForm />
     </Box>
   );

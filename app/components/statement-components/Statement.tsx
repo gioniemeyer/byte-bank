@@ -1,6 +1,5 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { useTransactions } from "@/app/contexts/TransactionContext";
 import {
   Box,
   Typography,
@@ -12,6 +11,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setEditingId,
+  deleteTransaction,
+  selectEditingId,
+} from "@/app/features/transactions";
 import FormModal from "../central-components/FormModal";
 import EditButton from "../buttons/EditButton";
 import StatementItem from "./StatementItem";
@@ -19,25 +24,32 @@ import FilterButton from "../buttons/FilterButton";
 
 export default function Statement() {
   const { isMobile, isDesktop } = useResponsive();
-  const { transactions, editingId, setEditingId, deleteTransaction } =
-    useTransactions();
+  const dispatch = useDispatch();
+  const editingId = useSelector(selectEditingId);
 
-  // Estados para modo de edição e exclusão
+  const transactions = useSelector(
+    (state: {
+      transactions: {
+        transactions: {
+          id: string;
+          date: string;
+          type: string;
+          value: number;
+        }[];
+      };
+    }) => state.transactions.transactions
+  );
+
+  // Estados de edição, exclusão, modal, filtros e paginação
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [open, setOpen] = useState(false);
-
-  // Filtros
-  const [filters, setFilters] = useState({
-    month: "",
-    transactionType: "",
-  });
-
-  // Paginação
+  const [filters, setFilters] = useState({ month: "", transactionType: "" });
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(8); // valor inicial
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const optionsRowsPerPage = [5, 8, 10, 20];
 
+  // Paginação
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -45,10 +57,10 @@ export default function Statement() {
   const handleRowsPerPageChange = (event: { target: { value: number } }) => {
     const value = Number(event.target.value);
     setRowsPerPage(value);
-    setPage(1); // reset para primeira página ao mudar o tamanho
+    setPage(1);
   };
 
-  // Filtro
+  // Filtros
   const filteredTransactions = useMemo(() => {
     const monthQuery = (filters.month || "").trim().toLowerCase();
 
@@ -64,53 +76,49 @@ export default function Statement() {
     });
   }, [transactions, filters.month, filters.transactionType]);
 
-  // Total de páginas
   const totalPages = Math.max(
     1,
     Math.ceil(filteredTransactions.length / rowsPerPage)
   );
 
-  // Itens paginados
   const paginated = useMemo(() => {
     const currentPage = Math.min(Math.max(page, 1), totalPages);
     const start = (currentPage - 1) * rowsPerPage;
     return filteredTransactions.slice(start, start + rowsPerPage);
   }, [filteredTransactions, page, rowsPerPage, totalPages]);
 
-  // Sincroniza page se filtros mudarem e reduzirem o total de páginas
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
     if (page < 1) setPage(1);
   }, [page, totalPages]);
 
-  // Handlers dos botões globais
+  // Handlers dos modos
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
     setDeleteMode(false);
-    setEditingId(null);
+    dispatch(setEditingId(null));
   };
 
   const handleDeleteMode = () => {
     setDeleteMode((prev) => !prev);
     setEditMode(false);
-    setEditingId(null);
+    dispatch(setEditingId(null));
+  };
+
+  const handleItemClick = (id: string) => {
+    if (editMode) {
+      dispatch(setEditingId(id));
+      if (!isDesktop) setOpen(true);
+    }
+    if (deleteMode) {
+      dispatch(deleteTransaction(id));
+    }
   };
 
   const openModal = () => setOpen(true);
   const closeModal = () => {
     setOpen(false);
-    setEditingId(null);
-  };
-
-  // Handler do clique no item
-  const handleItemClick = (id: number) => {
-    if (editMode) {
-      setEditingId(id);
-      if (!isDesktop) openModal();
-    }
-    if (deleteMode) {
-      deleteTransaction(id);
-    }
+    dispatch(setEditingId(null));
   };
 
   return (
@@ -147,11 +155,11 @@ export default function Statement() {
             initialFilters={filters}
             onChange={(f) => {
               setFilters(f);
-              setPage(1); // reset página ao mudar filtros
+              setPage(1);
             }}
             onApply={(f) => {
               setFilters(f);
-              setPage(1); // reset página ao aplicar filtros
+              setPage(1);
             }}
           />
           <span onClick={handleEditMode}>
@@ -180,7 +188,7 @@ export default function Statement() {
         {paginated.map((item, index) => (
           <StatementItem
             key={item.id || index}
-            id={item.id || index}
+            id={item.id}
             date={item.date}
             type={item.type}
             value={item.value}
@@ -191,7 +199,7 @@ export default function Statement() {
         ))}
       </Box>
 
-      {/* Rodapé: seletor de rowsPerPage + paginação */}
+      {/* Rodapé */}
       <Stack
         direction="row"
         alignItems="center"
@@ -222,35 +230,21 @@ export default function Statement() {
           onChange={handlePageChange}
           size="small"
           sx={{
-            // cor padrão dos itens (números, setas, reticências)
-            "& .MuiPaginationItem-root": {
-              color: "var(--thirdTextColor)",
-            },
+            "& .MuiPaginationItem-root": { color: "var(--thirdTextColor)" },
             "& .MuiPaginationItem-icon, & .MuiPaginationItem-ellipsis": {
               color: "var(--thirdTextColor)",
             },
-
-            // item selecionado: fundo primário e texto branco
             "& .MuiPaginationItem-root.Mui-selected": {
               backgroundColor: "var(--primaryColor)",
               color: "var(--primaryTextColor)",
             },
-            // hover do item selecionado
             "& .MuiPaginationItem-root.Mui-selected:hover": {
               backgroundColor: "var(--primaryColor)",
               opacity: 0.9,
             },
-
-            // hover dos itens não selecionados (opcional)
             "& .MuiPaginationItem-root:hover": {
               backgroundColor: "rgba(255,255,255,0.08)",
             },
-
-            // botão de navegação (First/Last/Prev/Next) se usar showFirstButton/showLastButton
-            "& .MuiPaginationItem-previousNext, & .MuiPaginationItem-firstLast":
-              {
-                color: "#000",
-              },
           }}
         />
       </Stack>

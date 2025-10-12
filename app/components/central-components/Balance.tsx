@@ -1,11 +1,12 @@
 "use client";
 import { useResponsive } from "@/app/contexts/ResponsiveContext";
-import { balanceMock } from "@/app/mocks/user-mock";
+import { selectCurrentBalance } from "@/app/features/transactions";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import type { SxProps, Theme } from "@mui/material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Balance() {
   const { isMobile, isDesktop } = useResponsive();
@@ -21,16 +22,28 @@ export default function Balance() {
     sx = { position: "relative", top: "86px", right: "110px" };
   }
 
-  // Pegue o saldo mais recente
-  const latestBalance = balanceMock[balanceMock.length - 1]?.balance ?? 0;
-
   // Cor do ícone/divisor
-  const iconColor = isDesktop ? "var(--secondaryColor)" : "var(--primaryTextColor)";
+  const iconColor = isDesktop
+    ? "var(--secondaryColor)"
+    : "var(--primaryTextColor)";
+
+  const balance = useSelector(selectCurrentBalance);
+  const balanceStr = new Intl.NumberFormat("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(balance ?? 0);
 
   return (
     <Box sx={sx}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontWeight: 600, fontSize: "20px", color: "var(--primaryTextColor)", mr: 4 }}>
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontSize: "20px",
+            color: "var(--primaryTextColor)",
+            mr: 4,
+          }}
+        >
           Saldo
         </Typography>
         <IconButton onClick={() => setShowBalance((prev) => !prev)}>
@@ -79,12 +92,7 @@ export default function Balance() {
             color: "var(--primaryTextColor)",
           }}
         >
-          {showBalance
-            ? latestBalance.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })
-            : "••••••"}
+          {showBalance ? balanceStr : "••••••"}
         </Typography>
       </Box>
     </Box>
